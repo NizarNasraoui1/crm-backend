@@ -13,17 +13,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 public abstract class GenericController<T extends BaseEntity,D> {
 
     @Autowired
     private GenericService<T> service;
     @Autowired
+    private GenericMapper<T,D> mapper;
 
     @PostMapping
-    public ResponseEntity<Object> save(T entity) {
+    public ResponseEntity<Object> save(D entityDto) {
         try {
-            return new ResponseEntity(service.save(entity), HttpStatus.OK);
+            return new ResponseEntity(service.save(mapper.toBo(entityDto)), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity("save error!", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -31,14 +33,14 @@ public abstract class GenericController<T extends BaseEntity,D> {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<T>findById(@PathVariable Long id){
-        return new ResponseEntity<>(service.findById(id).orElseThrow(()->new EntityNotFoundException("not found")),HttpStatus.FOUND);
+    public ResponseEntity<D>findById(@PathVariable Long id){
+        return new ResponseEntity<>(mapper.toDto(service.findById(id).orElseThrow(()->new EntityNotFoundException("not found"))),HttpStatus.FOUND);
     }
 
     @GetMapping("all")
-    public ResponseEntity<T> findAll() {
+    public ResponseEntity<List<D>> findAll() {
         try {
-            return new ResponseEntity(service.findAll(), HttpStatus.OK);
+            return new ResponseEntity(mapper.toDtos(service.findAll()), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity("find all error!", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -49,7 +51,7 @@ public abstract class GenericController<T extends BaseEntity,D> {
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
         try {
             service.delete(id);
-            return new ResponseEntity("delete successful", HttpStatus.OK);
+            return new ResponseEntity("delete successfully", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity("delete error!", HttpStatus.INTERNAL_SERVER_ERROR);
