@@ -19,7 +19,6 @@ public class Contact extends GenericEntity {
     Long id;
     String firstName;
     String lastName;
-    double phoneNumber;
     String address;
     String email;
 

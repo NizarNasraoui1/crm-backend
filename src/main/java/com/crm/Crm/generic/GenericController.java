@@ -16,7 +16,7 @@ public abstract class GenericController<T extends GenericEntity,D> {
     private GenericMapper<T,D> mapper;
 
     @PostMapping
-    public ResponseEntity<Object> save(D entityDto) {
+    public ResponseEntity<Object> save(@RequestBody D entityDto) {
         try {
             return new ResponseEntity(service.save(mapper.toBo(entityDto)), HttpStatus.OK);
         } catch (Exception e) {
