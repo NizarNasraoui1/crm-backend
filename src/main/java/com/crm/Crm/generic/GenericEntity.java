@@ -12,7 +12,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseEntity {
+public class GenericEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
-public abstract class GenericController<T extends BaseEntity,D> {
+public abstract class GenericController<T extends GenericEntity,D> {
 
     @Autowired
     private GenericService<T> service;

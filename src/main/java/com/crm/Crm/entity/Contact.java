@@ -1,6 +1,6 @@
 package com.crm.Crm.entity;
 
-import com.crm.Crm.generic.BaseEntity;
+import com.crm.Crm.generic.GenericEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Contact extends BaseEntity {
+public class Contact extends GenericEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String firstName;

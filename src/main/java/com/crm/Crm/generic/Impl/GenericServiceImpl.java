@@ -1,6 +1,6 @@
 package com.crm.Crm.generic.Impl;
 
-import com.crm.Crm.generic.BaseEntity;
+import com.crm.Crm.generic.GenericEntity;
 import com.crm.Crm.generic.GenericMapper;
 import com.crm.Crm.generic.GenericRepository;
 import com.crm.Crm.generic.GenericService;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 
-public class GenericServiceImpl<T extends BaseEntity,D> implements GenericService<T> {
+public class GenericServiceImpl<T extends GenericEntity,D> implements GenericService<T> {
 
     @Autowired
     protected GenericRepository<T> genericRepository;
