@@ -1,13 +1,6 @@
-package com.crm.Crm.controller.generic;
+package com.crm.Crm.generic;
 
-import com.crm.Crm.Repository.Generic.GenericRepository;
-import com.crm.Crm.entity.baseEntity.BaseEntity;
-import com.crm.Crm.mapper.generic.GenericMapper;
-import com.crm.Crm.service.generic.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
-package com.crm.Crm.service.generic;
+package com.crm.Crm.generic;
 
-import com.crm.Crm.entity.baseEntity.BaseEntity;
+import com.crm.Crm.generic.BaseEntity;
 
 import java.util.List;
 import java.util.Optional;

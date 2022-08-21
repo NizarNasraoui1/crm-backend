@@ -1,6 +1,6 @@
 package com.crm.Crm.entity;
 
-import com.crm.Crm.entity.baseEntity.BaseEntity;
+import com.crm.Crm.generic.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package com.crm.Crm.entity.baseEntity;
+package com.crm.Crm.generic;
 
 
 import lombok.AllArgsConstructor;

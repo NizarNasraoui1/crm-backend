@@ -1,11 +1,10 @@
-package com.crm.Crm.service.generic.impl;
+package com.crm.Crm.generic.Impl;
 
-import com.crm.Crm.Repository.Generic.GenericRepository;
-import com.crm.Crm.entity.baseEntity.BaseEntity;
-import com.crm.Crm.mapper.generic.GenericMapper;
-import com.crm.Crm.service.generic.GenericService;
+import com.crm.Crm.generic.BaseEntity;
+import com.crm.Crm.generic.GenericMapper;
+import com.crm.Crm.generic.GenericRepository;
+import com.crm.Crm.generic.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 import java.util.Optional;
