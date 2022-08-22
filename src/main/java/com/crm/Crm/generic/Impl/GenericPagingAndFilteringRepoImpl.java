@@ -1,12 +1,11 @@
 package com.crm.Crm.generic.Impl;
 
 import com.crm.Crm.generic.GenericEntity;
-import com.crm.Crm.generic.PagingAndFilteringRepo;
+import com.crm.Crm.generic.GenericPagingAndFilteringRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -16,12 +15,11 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-public class PagingAndFilteringRepoImpl<T extends GenericEntity> implements PagingAndFilteringRepo<T> {
+public class GenericPagingAndFilteringRepoImpl<T extends GenericEntity> implements GenericPagingAndFilteringRepo<T> {
     @Autowired
     EntityManager entityManager;
-    private Class<T> entityClass;
     //@Override
-    public List<T> getFilteredPage(int page, int rows,String searchWord, List<String> searchFields, String sortField) {
+    public List<T> getFilteredPage(int page, int rows,String searchWord, List<String> searchFields, String sortField,Class entityClass) {
         CriteriaBuilder cb=entityManager.getCriteriaBuilder();
         CriteriaQuery<T> cq=cb.createQuery(entityClass);
         Root<T> root=cq.from(entityClass);

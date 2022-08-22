@@ -25,7 +25,7 @@ public class ContactServiceImpl extends GenericServiceImpl<Contact, ContactDto> 
     ContactMapper contactMapper;
     public FilteredPageWrapper<ContactDto>getContactFilteredPage(int page, int rows, String searchWord,String sortField){
         List<String>searchWords= Arrays.asList("firstName","lastName");
-        List<ContactDto> contactDtoList=contactMapper.toDtos(contactRepository.getFilteredPage( page,  rows, "ali", searchWords, sortField));
+        List<ContactDto> contactDtoList=contactMapper.toDtos(contactRepository.getFilteredPage( page,  rows, "ali", searchWords, sortField,Contact.class));
         return new FilteredPageWrapper<ContactDto>(contactDtoList.size(),contactDtoList);
     }
 }
