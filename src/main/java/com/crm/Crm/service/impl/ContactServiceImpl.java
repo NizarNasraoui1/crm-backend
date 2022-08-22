@@ -1,5 +1,6 @@
 package com.crm.Crm.service.impl;
 
+import com.crm.Crm.Repository.ContactRepository;
 import com.crm.Crm.Repository.ContactSearchCriteria;
 import com.crm.Crm.dto.ContactDto;
 import com.crm.Crm.entity.Contact;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -18,9 +20,12 @@ public class ContactServiceImpl extends GenericServiceImpl<Contact, ContactDto> 
     @Autowired
     ContactSearchCriteria contactSearchCriteria;
     @Autowired
+    ContactRepository contactRepository;
+    @Autowired
     ContactMapper contactMapper;
     public FilteredPageWrapper<ContactDto>getContactFilteredPage(int page, int rows, String searchWord,String sortField){
-        List<ContactDto> contactDtoList=contactMapper.toDtos(contactSearchCriteria.getContactFilteredPage( page,  rows,  searchWord, sortField));
+        List<String>searchWords= Arrays.asList("firstName","lastName");
+        List<ContactDto> contactDtoList=contactMapper.toDtos(contactRepository.getFilteredPage( page,  rows, "ali", searchWords, sortField));
         return new FilteredPageWrapper<ContactDto>(contactDtoList.size(),contactDtoList);
     }
 }
