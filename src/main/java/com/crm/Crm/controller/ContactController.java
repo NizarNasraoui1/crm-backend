@@ -1,5 +1,7 @@
 package com.crm.Crm.controller;
 
+import com.crm.Crm.Exception.SearchFieldNotFoundException;
+import com.crm.Crm.dto.SearchFields;
 import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
 import com.crm.Crm.generic.GenericController;
 import com.crm.Crm.dto.ContactDto;
@@ -8,23 +10,27 @@ import com.crm.Crm.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/contact")
 public class ContactController extends GenericController<Contact, ContactDto> {
     @Autowired
     ContactService contactService;
-    @GetMapping("/filteredContact")
+    @PostMapping("/filteredContactsPage")
     public ResponseEntity<FilteredPageWrapper<ContactDto>> getFilteredContactPage(
             @RequestParam(name="page",required = false,defaultValue = "0") int page,
             @RequestParam(name="rows",required = false,defaultValue = "10")int rows,
             @RequestParam(name="searchWord",required=true)String searchWord,
-            @RequestParam(name="sortField",required = false,defaultValue = "id")String sortField)
+            @RequestParam(name="sortField",required = false,defaultValue = "id")String sortField,
+            @RequestBody SearchFields searchFields)
     {
-        return new ResponseEntity(contactService.getContactFilteredPage(page,rows,searchWord, sortField), HttpStatus.OK);
+        try{
+            return new ResponseEntity(contactService.getContactFilteredPage(page,rows,searchWord,searchFields, sortField), HttpStatus.OK);
+        } catch (SearchFieldNotFoundException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }
