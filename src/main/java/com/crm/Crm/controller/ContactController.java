@@ -17,20 +17,20 @@ import org.springframework.web.bind.annotation.*;
 public class ContactController extends GenericController<Contact, ContactDto> {
     @Autowired
     ContactService contactService;
-    @PostMapping("/filteredContactsPage")
-    public ResponseEntity<FilteredPageWrapper<ContactDto>> getFilteredContactPage(
-            @RequestParam(name="page",required = false,defaultValue = "0") int page,
-            @RequestParam(name="rows",required = false,defaultValue = "10")int rows,
-            @RequestParam(name="searchWord",required=true)String searchWord,
-            @RequestParam(name="sortField",required = false,defaultValue = "id")String sortField,
-            @RequestBody SearchFields searchFields)
-    {
-        try{
-            return new ResponseEntity(contactService.getContactFilteredPage(page,rows,searchWord,searchFields, sortField), HttpStatus.OK);
-        } catch (SearchFieldNotFoundException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-    }
+//    @PostMapping("/filteredContactsPage")
+//    public ResponseEntity<FilteredPageWrapper<ContactDto>> getFilteredContactPage(
+//            @RequestParam(name="page",required = false,defaultValue = "0") int page,
+//            @RequestParam(name="rows",required = false,defaultValue = "10")int rows,
+//            @RequestParam(name="searchWord",required=true)String searchWord,
+//            @RequestParam(name="sortField",required = false,defaultValue = "id")String sortField,
+//            @RequestBody SearchFields searchFields)
+//    {
+//        try{
+//            return new ResponseEntity(contactService.getContactFilteredPage(page,rows,searchWord,searchFields, sortField), HttpStatus.OK);
+//        } catch (SearchFieldNotFoundException e) {
+//            e.printStackTrace();
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//
+//    }
 }

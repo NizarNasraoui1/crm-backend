@@ -32,7 +32,7 @@ public class ContactServiceImpl extends GenericServiceImpl<Contact, ContactDto> 
             List<Field> contactfields=Arrays.asList(Contact.class.getDeclaredFields());
             for(Field field:contactfields){
                 if(!contactfields.contains(field)){
-                    throw new SearchFieldNotFoundException("search field not found");
+                    throw new SearchFieldNotFoundException("invalid search fields");
                 }
             }
         List<ContactDto> contactDtoList=contactMapper.toDtos(contactRepository.getFilteredPage( page,  rows, "ali", searchFields.getSearchFields(), sortField,Contact.class));
