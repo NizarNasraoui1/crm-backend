@@ -15,7 +15,6 @@
 	<description>clone of med.tn</description>
 	<properties>
 		<java.version>1.8</java.version>
-		<springdoc-openapi-bom.version>1.5.4</springdoc-openapi-bom.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -27,17 +26,8 @@
 			<artifactId>spring-boot-starter-data-rest</artifactId>
 		</dependency>
 		<dependency>
-
-
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>${springdoc-openapi-bom.version}</version>
 		</dependency>
 
 		<dependency>
