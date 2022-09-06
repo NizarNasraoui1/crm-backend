@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/contact")
+@RequestMapping("api/contact")
 public class ContactController extends GenericController<Contact, ContactDto> {
     @Autowired
     ContactService contactService;

@@ -53,15 +53,14 @@ public abstract class GenericController<T extends GenericEntity,D> {
             return new ResponseEntity("delete error!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    // add sort direction + change pagination to two sorts of pagination: with sorting and without sorting
-    // add exception for non valid searchFields
-    @PostMapping("/filteredPage")
-    public ResponseEntity<FilteredPageWrapper<T>>getFilteredPage(@RequestParam(value = "page",required = false,defaultValue = "0") int page,
+
+    @PostMapping("/filter")
+    public ResponseEntity<FilteredPageWrapper<T>>filter(@RequestParam(value = "page",required = false,defaultValue = "0") int page,
     @RequestParam(value="pageSize",required = false,defaultValue = "10") int pageSize,
     @RequestParam(value = "sortDirection",required = false,defaultValue = "ASC") SortDirection sortDirection,
-    @RequestParam(value = "sortField",required = false,defaultValue = "id")String sortField,
+    @RequestParam(value = "sortField",required = false)String sortField,
     @RequestParam(value = "searchWord",required = false,defaultValue = "")String searchWord, @RequestBody SearchFields searchFields){
-        return new ResponseEntity<>(service.getFilteredPage(searchWord,searchFields,page, pageSize, SortDirection.ASC),HttpStatus.FOUND);
+        return new ResponseEntity<>(service.getFilteredPage(searchWord,searchFields,page, pageSize, SortDirection.ASC),HttpStatus.OK);
 
     }
 }

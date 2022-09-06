@@ -10,11 +10,7 @@ import javax.persistence.Id;
 
 import static javax.persistence.GenerationType.AUTO;
 
-/**
- * @author Get Arrays (https://www.getarrays.io/)
- * @version 1.0
- * @since 7/10/2021
- */
+
 @Entity
 @Data
 @NoArgsConstructor

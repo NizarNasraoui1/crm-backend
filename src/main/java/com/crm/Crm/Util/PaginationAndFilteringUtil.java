@@ -11,6 +11,6 @@ public class PaginationAndFilteringUtil {
         if(sortDirection.equals("DESC")){
             return PageRequest.of(page,size, Sort.Direction.DESC);
         }
-        return PageRequest.of(0,5, Sort.Direction.ASC,"firstName");
+        return PageRequest.of(page,size, Sort.Direction.ASC,"firstName");
     }
 }
