@@ -13,7 +13,7 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.List;
 import java.util.Optional;
 
-public class GenericServiceImpl<T extends GenericEntity,D> implements GenericService<T> {
+public class GenericServiceImpl<T extends GenericEntity,D> implements GenericService<T,D> {
 
     @Autowired
     protected GenericRepository<T> genericRepository;
@@ -53,12 +53,12 @@ public class GenericServiceImpl<T extends GenericEntity,D> implements GenericSer
         }
     }
 
-    public FilteredPageWrapper<T> getFilteredPage(String searchWord,SearchFields searchFields,int page, int pageSize, SortDirection sortDirection) {
+    public FilteredPageWrapper<D> getFilteredPage(String searchWord,SearchFields searchFields,int page, int pageSize, SortDirection sortDirection) {
         PageRequest pageRequest= PaginationAndFilteringUtil.getPaginationRequest(page,pageSize,sortDirection);
         GenericSearchSpecification<T> genericSearchSpecification=new GenericSearchSpecification<>();
         Specification<T>filterSpecification= genericSearchSpecification.getGenericSearchSpecification(searchWord, searchFields);
         Page<T> resultPage=genericRepository.findAll(filterSpecification,pageRequest);
-        FilteredPageWrapper<T> filteredPageWrapper=new FilteredPageWrapper<>(resultPage.getTotalPages(),resultPage.getContent());
+        FilteredPageWrapper<D> filteredPageWrapper=new FilteredPageWrapper<>(resultPage.getTotalPages(),mapper.toDtos(resultPage.getContent()));
         return filteredPageWrapper;
     }
 

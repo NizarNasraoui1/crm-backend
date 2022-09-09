@@ -14,7 +14,7 @@ import java.util.List;
 public abstract class GenericController<T extends GenericEntity,D> {
 
     @Autowired
-    private GenericService<T> service;
+    private GenericService<T,D> service;
     @Autowired
     private GenericMapper<T,D> mapper;
 
@@ -28,9 +28,19 @@ public abstract class GenericController<T extends GenericEntity,D> {
         }
     }
 
+    @PutMapping
+    public ResponseEntity<Object> update(@RequestBody D entityDto) {
+        try {
+            return new ResponseEntity(service.save(mapper.toBo(entityDto)), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity("save error!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<D>findById(@PathVariable Long id){
-        return new ResponseEntity<>(mapper.toDto(service.findById(id).orElseThrow(()->new EntityNotFoundException("not found"))),HttpStatus.FOUND);
+        return new ResponseEntity<>(mapper.toDto(service.findById(id).orElseThrow(()->new EntityNotFoundException("not found"))),HttpStatus.OK);
     }
 
     @GetMapping("all")
@@ -47,7 +57,7 @@ public abstract class GenericController<T extends GenericEntity,D> {
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
         try {
             service.delete(id);
-            return new ResponseEntity("delete successfully", HttpStatus.OK);
+            return new ResponseEntity( HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity("delete error!", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -55,7 +65,7 @@ public abstract class GenericController<T extends GenericEntity,D> {
     }
 
     @PostMapping("/filter")
-    public ResponseEntity<FilteredPageWrapper<T>>filter(@RequestParam(value = "page",required = false,defaultValue = "0") int page,
+    public ResponseEntity<FilteredPageWrapper<D>>filter(@RequestParam(value = "page",required = false,defaultValue = "0") int page,
     @RequestParam(value="pageSize",required = false,defaultValue = "10") int pageSize,
     @RequestParam(value = "sortDirection",required = false,defaultValue = "ASC") SortDirection sortDirection,
     @RequestParam(value = "sortField",required = false)String sortField,

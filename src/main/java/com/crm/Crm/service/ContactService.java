@@ -9,6 +9,8 @@ import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
 
 import java.util.List;
 
-public interface ContactService extends GenericService<Contact> {
+public interface ContactService extends GenericService<Contact,ContactDto> {
     public FilteredPageWrapper<ContactDto> getContactFilteredPage(int page, int rows, String searchWord, SearchFields searchFields, String sortField) throws SearchFieldNotFoundException;
+
+    public ContactDto updateContactDetails(Long id,ContactDto contactDto);
 }

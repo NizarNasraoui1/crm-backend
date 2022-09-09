@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.*;
 public class ContactController extends GenericController<Contact, ContactDto> {
     @Autowired
     ContactService contactService;
+    @PutMapping("/details/{id}")
+    public ResponseEntity<ContactDto> updateContactDetails(@PathVariable("id")Long id,@RequestBody ContactDto contactDto){
+        return new ResponseEntity<>(contactService.updateContactDetails(id,contactDto),HttpStatus.OK);
+    }
 //    @PostMapping("/filteredContactsPage")
 //    public ResponseEntity<FilteredPageWrapper<ContactDto>> getFilteredContactPage(
 //            @RequestParam(name="page",required = false,defaultValue = "0") int page,

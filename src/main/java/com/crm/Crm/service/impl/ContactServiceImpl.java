@@ -12,8 +12,10 @@ import com.crm.Crm.service.ContactService;
 import com.crm.Crm.generic.Impl.GenericServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -21,6 +23,7 @@ import java.util.List;
 
 @Slf4j
 @Service
+@Transactional
 public class ContactServiceImpl extends GenericServiceImpl<Contact, ContactDto> implements ContactService {
     @Autowired
     ContactSearchCriteria contactSearchCriteria;
@@ -37,5 +40,15 @@ public class ContactServiceImpl extends GenericServiceImpl<Contact, ContactDto> 
             }
         List<ContactDto> contactDtoList=contactMapper.toDtos(contactRepository.getFilteredPage( page,  rows, "ali", searchFields.getSearchFields(), sortField,Contact.class));
         return new FilteredPageWrapper<ContactDto>(contactDtoList.size(),contactDtoList);
+    }
+
+    @Override
+    public ContactDto updateContactDetails(Long id, ContactDto contactDto) {
+        Contact updateContact= contactRepository.findById(id).orElseThrow(()->new ResourceNotFoundException());
+        updateContact.setFirstName(contactDto.getFirstName());
+        updateContact.setLastName(contactDto.getLastName());
+        updateContact.setAddress(contactDto.getAddress());
+        updateContact.setEmail(contactDto.getEmail());
+        return contactMapper.toDto(updateContact);
     }
 }
