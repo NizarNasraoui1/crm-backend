@@ -8,9 +8,9 @@ import java.util.Objects;
 
 public class PaginationAndFilteringUtil {
     public static PageRequest getPaginationRequest(int page, int size, SortDirection sortDirection){
-        if(sortDirection.equals("DESC")){
-            return PageRequest.of(page,size, Sort.Direction.DESC);
-        }
-        return PageRequest.of(page,size, Sort.Direction.ASC,"firstName");
+//        if(sortDirection.equals("DESC")){
+//            return PageRequest.of(page,size, Sort.Direction.DESC);
+//        }
+        return PageRequest.of(page,size, Sort.Direction.DESC,"modifyDate");
     }
 }

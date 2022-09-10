@@ -15,8 +15,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Contact extends GenericEntity {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+
     String firstName;
     String lastName;
     String address;
