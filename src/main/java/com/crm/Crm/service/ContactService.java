@@ -2,6 +2,7 @@ package com.crm.Crm.service;
 
 import com.crm.Crm.Exception.SearchFieldNotFoundException;
 import com.crm.Crm.dto.ContactDto;
+import com.crm.Crm.dto.SearchConfiguration;
 import com.crm.Crm.dto.SearchFields;
 import com.crm.Crm.entity.Contact;
 import com.crm.Crm.generic.GenericService;
@@ -13,4 +14,6 @@ public interface ContactService extends GenericService<Contact,ContactDto> {
     public FilteredPageWrapper<ContactDto> getContactFilteredPage(int page, int rows, String searchWord, SearchFields searchFields, String sortField) throws SearchFieldNotFoundException;
 
     public ContactDto updateContactDetails(Long id,ContactDto contactDto);
+
+    SearchConfiguration getSearchParams();
 }

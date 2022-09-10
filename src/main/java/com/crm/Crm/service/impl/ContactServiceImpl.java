@@ -4,8 +4,11 @@ import com.crm.Crm.Exception.SearchFieldNotFoundException;
 import com.crm.Crm.Repository.ContactRepository;
 import com.crm.Crm.Repository.ContactSearchCriteria;
 import com.crm.Crm.dto.ContactDto;
+import com.crm.Crm.dto.SearchConfiguration;
 import com.crm.Crm.dto.SearchFields;
 import com.crm.Crm.entity.Contact;
+import com.crm.Crm.enumeration.ContactSearchFields;
+import com.crm.Crm.enumeration.ContactSortFields;
 import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
 import com.crm.Crm.mapper.ContactMapper;
 import com.crm.Crm.service.ContactService;
@@ -50,5 +53,17 @@ public class ContactServiceImpl extends GenericServiceImpl<Contact, ContactDto> 
         updateContact.setAddress(contactDto.getAddress());
         updateContact.setEmail(contactDto.getEmail());
         return contactMapper.toDto(updateContact);
+    }
+
+    @Override
+    public SearchConfiguration getSearchParams() {
+        SearchConfiguration searchConfiguration=new SearchConfiguration();
+        for(ContactSortFields sortField: ContactSortFields.values()){
+            searchConfiguration.getSortFields().add(sortField.label);
+        }
+        for(ContactSearchFields searchField: ContactSearchFields.values()){
+            searchConfiguration.getSortFields().add(searchField.label);
+        }
+        return searchConfiguration;
     }
 }

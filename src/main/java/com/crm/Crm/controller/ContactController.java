@@ -1,6 +1,7 @@
 package com.crm.Crm.controller;
 
 import com.crm.Crm.Exception.SearchFieldNotFoundException;
+import com.crm.Crm.dto.SearchConfiguration;
 import com.crm.Crm.dto.SearchFields;
 import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
 import com.crm.Crm.generic.GenericController;
@@ -20,6 +21,10 @@ public class ContactController extends GenericController<Contact, ContactDto> {
     @PutMapping("/details/{id}")
     public ResponseEntity<ContactDto> updateContactDetails(@PathVariable("id")Long id,@RequestBody ContactDto contactDto){
         return new ResponseEntity<>(contactService.updateContactDetails(id,contactDto),HttpStatus.OK);
+    }
+    @GetMapping("/searchParams")
+    public ResponseEntity<SearchConfiguration> getSearchParams() throws ClassNotFoundException {
+        return new ResponseEntity<>(this.contactService.getSearchParams(),HttpStatus.OK);
     }
 //    @PostMapping("/filteredContactsPage")
 //    public ResponseEntity<FilteredPageWrapper<ContactDto>> getFilteredContactPage(

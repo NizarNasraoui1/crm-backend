@@ -1,5 +1,6 @@
 package com.crm.Crm.generic;
 
+import com.crm.Crm.dto.SearchConfiguration;
 import com.crm.Crm.dto.SearchFields;
 import com.crm.Crm.enumeration.SortDirection;
 import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
@@ -64,13 +65,15 @@ public abstract class GenericController<T extends GenericEntity,D> {
         }
     }
 
+
+
     @PostMapping("/filter")
     public ResponseEntity<FilteredPageWrapper<D>>filter(@RequestParam(value = "page",required = false,defaultValue = "0") int page,
     @RequestParam(value="pageSize",required = false,defaultValue = "10") int pageSize,
     @RequestParam(value = "sortDirection",required = false,defaultValue = "ASC") SortDirection sortDirection,
     @RequestParam(value = "sortField",required = false)String sortField,
     @RequestParam(value = "searchWord",required = false,defaultValue = "")String searchWord, @RequestBody SearchFields searchFields){
-        return new ResponseEntity<>(service.getFilteredPage(searchWord,searchFields,page, pageSize, SortDirection.ASC),HttpStatus.OK);
+        return new ResponseEntity<>(service.getFilteredPage(searchWord,searchFields,page, pageSize,sortField, SortDirection.ASC),HttpStatus.OK);
 
     }
 }
