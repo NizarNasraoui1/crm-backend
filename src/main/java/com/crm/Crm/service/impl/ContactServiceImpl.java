@@ -4,6 +4,7 @@ import com.crm.Crm.Exception.SearchFieldNotFoundException;
 import com.crm.Crm.Repository.ContactRepository;
 import com.crm.Crm.Repository.ContactSearchCriteria;
 import com.crm.Crm.dto.ContactDto;
+import com.crm.Crm.dto.ParamDto;
 import com.crm.Crm.dto.SearchConfiguration;
 import com.crm.Crm.dto.SearchFields;
 import com.crm.Crm.entity.Contact;
@@ -59,10 +60,10 @@ public class ContactServiceImpl extends GenericServiceImpl<Contact, ContactDto> 
     public SearchConfiguration getSearchParams() {
         SearchConfiguration searchConfiguration=new SearchConfiguration();
         for(ContactSortFields sortField: ContactSortFields.values()){
-            searchConfiguration.getSortFields().add(sortField.label);
+            searchConfiguration.getSortFields().add(new ParamDto(sortField.name,sortField.label));
         }
         for(ContactSearchFields searchField: ContactSearchFields.values()){
-            searchConfiguration.getSortFields().add(searchField.label);
+            searchConfiguration.getSearchFields().add(new ParamDto(searchField.name,searchField.label));
         }
         return searchConfiguration;
     }

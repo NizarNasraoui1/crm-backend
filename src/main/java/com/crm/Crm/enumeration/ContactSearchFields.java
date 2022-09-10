@@ -1,12 +1,14 @@
 package com.crm.Crm.enumeration;
 
 public enum ContactSearchFields {
-    FIRST_NAME("firstName"),
-    LAST_NAME("lastName");
+    FIRST_NAME("firstName","First Name"),
+    LAST_NAME("lastName","LastName");
 
     public final String label;
+    public final String name;
 
-    ContactSearchFields(String label) {
+    ContactSearchFields(String name,String label) {
         this.label = label;
+        this.name= name;
     }
 }

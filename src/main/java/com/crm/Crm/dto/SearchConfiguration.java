@@ -10,8 +10,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class SearchConfiguration {
-    List<String>sortFields;
-    List<String>searchFields;
+    List<ParamDto>sortFields;
+    List<ParamDto>searchFields;
 
     public SearchConfiguration(){
         this.searchFields=new ArrayList<>();
