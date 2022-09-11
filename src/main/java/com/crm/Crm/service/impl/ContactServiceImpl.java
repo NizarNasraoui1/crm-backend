@@ -28,7 +28,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional
-public class ContactServiceImpl extends GenericServiceImpl<Contact, ContactDto> implements ContactService {
+public class ContactServiceImpl extends CrmBaseEntityServiceImpl<Contact, ContactDto> implements ContactService {
     @Autowired
     ContactSearchCriteria contactSearchCriteria;
     @Autowired

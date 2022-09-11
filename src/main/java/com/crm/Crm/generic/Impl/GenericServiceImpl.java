@@ -17,9 +17,6 @@ public class GenericServiceImpl<T extends GenericEntity,D> implements GenericSer
     @Autowired
     protected GenericRepository<T> genericRepository;
 
-    @Autowired
-    protected GenericMapper<T,D> mapper;
-
     @Override
     public Optional<T> findById(Long id) {
         return genericRepository.findById(id);
@@ -52,20 +49,20 @@ public class GenericServiceImpl<T extends GenericEntity,D> implements GenericSer
         }
     }
 
-    public FilteredPageWrapper<D> getFilteredPage(String searchWord,SearchFields searchFields,int page, int pageSize,String sortField, String sortDirection) {
-        PageRequest pageRequest= PaginationAndFilteringUtil.getPaginationRequest(page,pageSize,sortField,sortDirection);
-        GenericSearchSpecification<T> genericSearchSpecification=new GenericSearchSpecification<>();
-        Page<T> resultPage;
-        if(!searchFields.getSearchFields().isEmpty()){
-            Specification<T>filterSpecification= genericSearchSpecification.getGenericSearchSpecification(searchWord, searchFields);
-            resultPage=genericRepository.findAll(filterSpecification,pageRequest);
-        }
-        else{
-            resultPage=genericRepository.findAll(pageRequest);
-        }
-        FilteredPageWrapper<D> filteredPageWrapper=new FilteredPageWrapper<>(resultPage.getTotalPages(),mapper.toDtos(resultPage.getContent()));
-        return filteredPageWrapper;
-    }
+//    public FilteredPageWrapper<D> getFilteredPage(String searchWord,SearchFields searchFields,int page, int pageSize,String sortField, String sortDirection) {
+//        PageRequest pageRequest= PaginationAndFilteringUtil.getPaginationRequest(page,pageSize,sortField,sortDirection);
+//        GenericSearchSpecification<T> genericSearchSpecification=new GenericSearchSpecification<>();
+//        Page<T> resultPage;
+//        if(!searchFields.getSearchFields().isEmpty()){
+//            Specification<T>filterSpecification= genericSearchSpecification.getGenericSearchSpecification(searchWord, searchFields);
+//            resultPage=genericRepository.findAll(filterSpecification,pageRequest);
+//        }
+//        else{
+//            resultPage=genericRepository.findAll(pageRequest);
+//        }
+//        FilteredPageWrapper<D> filteredPageWrapper=new FilteredPageWrapper<>(resultPage.getTotalPages(),mapper.toDtos(resultPage.getContent()));
+//        return filteredPageWrapper;
+//    }
 
 
 

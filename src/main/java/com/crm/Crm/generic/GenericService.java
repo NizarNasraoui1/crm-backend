@@ -13,7 +13,7 @@ public interface GenericService<T extends GenericEntity,D>  {
     T save(T entity) throws Exception;
     void delete(Long id) throws Exception;
 
-    FilteredPageWrapper<D> getFilteredPage(String searchWord,SearchFields searchFields,int page, int pageSize,String sortField, String sortDirection);
+//    FilteredPageWrapper<D> getFilteredPage(String searchWord,SearchFields searchFields,int page, int pageSize,String sortField, String sortDirection);
 
 
 }

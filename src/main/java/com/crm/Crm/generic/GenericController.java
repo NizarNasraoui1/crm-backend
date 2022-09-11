@@ -13,9 +13,10 @@ import java.util.List;
 public abstract class GenericController<T extends GenericEntity,D> {
 
     @Autowired
-    private GenericService<T,D> service;
+    protected GenericService<T,D> service;
     @Autowired
-    private GenericMapper<T,D> mapper;
+    protected GenericMapper<T,D> mapper;
+
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody D entityDto) {
@@ -42,7 +43,7 @@ public abstract class GenericController<T extends GenericEntity,D> {
         return new ResponseEntity<>(mapper.toDto(service.findById(id).orElseThrow(()->new EntityNotFoundException("not found"))),HttpStatus.OK);
     }
 
-    @GetMapping("all")
+    @GetMapping("/all")
     public ResponseEntity<List<D>> findAll() {
         try {
             return new ResponseEntity(mapper.toDtos(service.findAll()), HttpStatus.OK);
@@ -65,13 +66,5 @@ public abstract class GenericController<T extends GenericEntity,D> {
 
 
 
-    @PostMapping("/filter")
-    public ResponseEntity<FilteredPageWrapper<D>>filter(@RequestParam(value = "page",required = false,defaultValue = "0") int page,
-    @RequestParam(value="pageSize",required = false,defaultValue = "10") int pageSize,
-    @RequestParam(value = "sortDirection",required = false,defaultValue = "ASC") String sortDirection,
-    @RequestParam(value = "sortField",required = false)String sortField,
-    @RequestParam(value = "searchWord",required = false,defaultValue = "")String searchWord, @RequestBody SearchFields searchFields){
-        return new ResponseEntity<>(service.getFilteredPage(searchWord,searchFields,page, pageSize,sortField, sortDirection),HttpStatus.OK);
 
-    }
 }
