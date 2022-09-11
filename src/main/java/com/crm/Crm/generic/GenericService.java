@@ -1,8 +1,6 @@
 package com.crm.Crm.generic;
 
-import com.crm.Crm.dto.SearchConfiguration;
 import com.crm.Crm.dto.SearchFields;
-import com.crm.Crm.enumeration.SortDirection;
 import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
 
 import java.util.List;
@@ -15,7 +13,7 @@ public interface GenericService<T extends GenericEntity,D>  {
     T save(T entity) throws Exception;
     void delete(Long id) throws Exception;
 
-    FilteredPageWrapper<D> getFilteredPage(String searchWord,SearchFields searchFields,int page, int pageSize,String sortField, SortDirection sortDirection);
+    FilteredPageWrapper<D> getFilteredPage(String searchWord,SearchFields searchFields,int page, int pageSize,String sortField, String sortDirection);
 
 
 }

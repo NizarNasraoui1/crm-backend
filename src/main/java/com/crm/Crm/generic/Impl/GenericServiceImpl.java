@@ -1,11 +1,7 @@
 package com.crm.Crm.generic.Impl;
-import java.lang.reflect.*;
 
 import com.crm.Crm.Util.PaginationAndFilteringUtil;
-import com.crm.Crm.dto.SearchConfiguration;
 import com.crm.Crm.dto.SearchFields;
-import com.crm.Crm.entity.Contact;
-import com.crm.Crm.enumeration.SortDirection;
 import com.crm.Crm.generic.*;
 import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class GenericServiceImpl<T extends GenericEntity,D> implements GenericService<T,D> {
 
@@ -58,7 +52,7 @@ public class GenericServiceImpl<T extends GenericEntity,D> implements GenericSer
         }
     }
 
-    public FilteredPageWrapper<D> getFilteredPage(String searchWord,SearchFields searchFields,int page, int pageSize,String sortField, SortDirection sortDirection) {
+    public FilteredPageWrapper<D> getFilteredPage(String searchWord,SearchFields searchFields,int page, int pageSize,String sortField, String sortDirection) {
         PageRequest pageRequest= PaginationAndFilteringUtil.getPaginationRequest(page,pageSize,sortField,sortDirection);
         GenericSearchSpecification<T> genericSearchSpecification=new GenericSearchSpecification<>();
         Page<T> resultPage;

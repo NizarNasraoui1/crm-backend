@@ -1,6 +1,7 @@
 package com.crm.Crm.enumeration;
 
 public enum ContactSortFields {
+    MODIFY_DATE("modifyDate","Last Modification"),
     FIRST_NAME("firstName","First Name"),
     LAST_NAME("lastName","LastName");
 
