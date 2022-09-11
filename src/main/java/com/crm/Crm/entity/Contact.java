@@ -1,20 +1,17 @@
 package com.crm.Crm.entity;
 
-import com.crm.Crm.generic.GenericEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Contact extends GenericEntity {
+
+public class Contact extends CrmBaseEntity {
 
     String firstName;
     String lastName;
@@ -22,4 +19,10 @@ public class Contact extends GenericEntity {
     String email;
 
 
+    public Contact(List<File> fileList, List<Note> noteList) {
+        super(fileList, noteList);
+    }
+    public Contact() {
+        super(new ArrayList<>(), new ArrayList<>());
+    }
 }
