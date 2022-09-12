@@ -1,6 +1,8 @@
 package com.crm.Crm.controller;
 
+import com.crm.Crm.dto.CrmBaseEntityDto;
 import com.crm.Crm.dto.SearchFields;
+import com.crm.Crm.entity.CrmBaseEntity;
 import com.crm.Crm.generic.GenericController;
 import com.crm.Crm.generic.GenericEntity;
 import com.crm.Crm.generic.GenericMapper;
@@ -15,13 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-public class CrmBaseEntityController<T extends GenericEntity,D> extends GenericController<T,D> {
+public class CrmBaseEntityController extends GenericController<CrmBaseEntity, CrmBaseEntityDto> {
     @Autowired
-    CrmBaseEntityService<T,D> crmBaseEntityService;
+    CrmBaseEntityService crmBaseEntityService;
 
 
     @PostMapping("/filter")
-    public ResponseEntity<FilteredPageWrapper<D>> filter(@RequestParam(value = "page",required = false,defaultValue = "0") int page,
+    public ResponseEntity<FilteredPageWrapper<CrmBaseEntityDto>> filter(@RequestParam(value = "page",required = false,defaultValue = "0") int page,
                                                          @RequestParam(value="pageSize",required = false,defaultValue = "10") int pageSize,
                                                          @RequestParam(value = "sortDirection",required = false,defaultValue = "ASC") String sortDirection,
                                                          @RequestParam(value = "sortField",required = false)String sortField,

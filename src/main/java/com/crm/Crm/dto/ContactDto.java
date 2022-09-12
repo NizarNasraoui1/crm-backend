@@ -4,7 +4,7 @@ import lombok.*;
 
 @Data
 @AllArgsConstructor
-public class ContactDto {
+public class ContactDto extends CrmBaseEntityDto{
     Long id;
     String firstName;
     String lastName;

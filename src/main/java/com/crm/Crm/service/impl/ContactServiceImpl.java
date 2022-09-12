@@ -8,6 +8,7 @@ import com.crm.Crm.dto.ParamDto;
 import com.crm.Crm.dto.SearchConfiguration;
 import com.crm.Crm.dto.SearchFields;
 import com.crm.Crm.entity.Contact;
+import com.crm.Crm.entity.CrmBaseEntity;
 import com.crm.Crm.enumeration.ContactSearchFields;
 import com.crm.Crm.enumeration.ContactSortFields;
 import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
@@ -22,13 +23,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
 @Service
 @Transactional
-public class ContactServiceImpl extends CrmBaseEntityServiceImpl<Contact, ContactDto> implements ContactService {
+public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements ContactService {
     @Autowired
     ContactSearchCriteria contactSearchCriteria;
     @Autowired
@@ -42,18 +44,19 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl<Contact, Contac
                     throw new SearchFieldNotFoundException("invalid search fields");
                 }
             }
-        List<ContactDto> contactDtoList=contactMapper.toDtos(contactRepository.getFilteredPage( page,  rows, "ali", searchFields.getSearchFields(), sortField,Contact.class));
+            List<? extends CrmBaseEntity> crmBaseEntities=contactRepository.getFilteredPage( page,  rows, "ali", searchFields.getSearchFields(), sortField,Contact.class);
+    List<ContactDto> contactDtoList=contactMapper.toDtos(new ArrayList<>());
         return new FilteredPageWrapper<ContactDto>(contactDtoList.size(),contactDtoList);
     }
 
     @Override
     public ContactDto updateContactDetails(Long id, ContactDto contactDto) {
-        Contact updateContact= contactRepository.findById(id).orElseThrow(()->new ResourceNotFoundException());
-        updateContact.setFirstName(contactDto.getFirstName());
-        updateContact.setLastName(contactDto.getLastName());
-        updateContact.setAddress(contactDto.getAddress());
-        updateContact.setEmail(contactDto.getEmail());
-        return contactMapper.toDto(updateContact);
+//        Contact updateContact= contactRepository.findById(id).orElseThrow(()->new ResourceNotFoundException());
+//        updateContact.setFirstName(contactDto.getFirstName());
+//        updateContact.setLastName(contactDto.getLastName());
+//        updateContact.setAddress(contactDto.getAddress());
+//        updateContact.setEmail(contactDto.getEmail());
+        return contactMapper.toDto(new Contact());
     }
 
     @Override

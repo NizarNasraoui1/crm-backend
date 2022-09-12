@@ -10,10 +10,12 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-@MappedSuperclass
+@NoArgsConstructor
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class CrmBaseEntity extends GenericEntity {
     @OneToMany
-    List<File> fileList;
+    private List<File> fileList;
     @OneToMany
-    List<Note>noteList;
+    private List<Note>noteList;
 }

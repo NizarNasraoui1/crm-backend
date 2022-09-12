@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/contact")
-public class ContactController extends CrmBaseEntityController<Contact, ContactDto> {
+public class ContactController extends CrmBaseEntityController {
     @Autowired
     ContactService contactService;
     @PutMapping("/details/{id}")

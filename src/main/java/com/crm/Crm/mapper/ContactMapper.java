@@ -6,5 +6,5 @@ import com.crm.Crm.generic.GenericMapper;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface ContactMapper extends GenericMapper<Contact, ContactDto> {
+public interface ContactMapper extends GenericMapper<Contact, ContactDto>{
 }
