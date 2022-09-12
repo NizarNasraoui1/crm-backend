@@ -10,18 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
-public abstract class GenericController<T extends GenericEntity,D> {
+public abstract class GenericController<T extends GenericEntity,D,M extends GenericMapper<T,D>> {
 
     @Autowired
-    protected GenericService<T,D> service;
-    @Autowired
-    protected GenericMapper<T,D> mapper;
-
+    protected GenericService<T,D,M> service;
 
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody D entityDto) {
         try {
-            return new ResponseEntity(service.save(mapper.toBo(entityDto)), HttpStatus.OK);
+            return new ResponseEntity(service.save(entityDto), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity("save error!", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -31,7 +28,7 @@ public abstract class GenericController<T extends GenericEntity,D> {
     @PutMapping
     public ResponseEntity<Object> update(@RequestBody D entityDto) {
         try {
-            return new ResponseEntity(service.save(mapper.toBo(entityDto)), HttpStatus.OK);
+            return new ResponseEntity(service.save(entityDto), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity("save error!", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -39,14 +36,14 @@ public abstract class GenericController<T extends GenericEntity,D> {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<D>findById(@PathVariable Long id){
-        return new ResponseEntity<>(mapper.toDto(service.findById(id).orElseThrow(()->new EntityNotFoundException("not found"))),HttpStatus.OK);
+    public ResponseEntity<Object>findById(@PathVariable Long id){
+        return new ResponseEntity<>(service.findById(id),HttpStatus.OK);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<D>> findAll() {
         try {
-            return new ResponseEntity(mapper.toDtos(service.findAll()), HttpStatus.OK);
+            return new ResponseEntity(service.findAll(), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity("find all error!", HttpStatus.INTERNAL_SERVER_ERROR);

@@ -25,7 +25,7 @@ import java.util.List;
 
 @Service("crmBaseEntityService")
 @Primary
-public class CrmBaseEntityServiceImpl extends GenericServiceImpl<CrmBaseEntity,CrmBaseEntityDto> implements CrmBaseEntityService {
+public class CrmBaseEntityServiceImpl extends GenericServiceImpl<CrmBaseEntity,CrmBaseEntityDto,CrmBaseEntityMapper> implements CrmBaseEntityService {
 
     @Autowired
     protected CrmBaseEntityMapper mapper;
@@ -44,8 +44,7 @@ public class CrmBaseEntityServiceImpl extends GenericServiceImpl<CrmBaseEntity,C
         else{
             resultPage=crmBaseEntityRepo.findAll(pageRequest);
         }
-        FilteredPageWrapper<CrmBaseEntityDto> filteredPageWrapper=new FilteredPageWrapper<>(resultPage.getTotalPages()*pageSize,mapper.toDtos(resultPage.getContent()));
-        return new FilteredPageWrapper<>();
+        return new FilteredPageWrapper<>(resultPage.getTotalPages()*pageSize,mapper.toDtos(resultPage.getContent()));
     }
 
     @Override
