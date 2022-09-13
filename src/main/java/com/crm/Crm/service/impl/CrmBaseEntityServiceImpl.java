@@ -67,12 +67,6 @@ public class CrmBaseEntityServiceImpl implements CrmBaseEntityService {
         else{
             resultPage=crmBaseEntityRepo.findAll(pageRequest);
         }
-        if(!resultPage.getContent().isEmpty()){
-            if(resultPage.getContent().get(0) instanceof Contact){
-                List<CrmBaseEntityDto>contactDtos=resultPage.getContent().stream().map((contact)->contactMapper.toDto((Contact) contact)).collect(Collectors.toList());
-                return new FilteredPageWrapper<>(resultPage.getTotalPages()*pageSize,contactDtos);
-            }
-        }
         return new FilteredPageWrapper<>(resultPage.getTotalPages()*pageSize,crmBaseEntityMapper.toDtos(resultPage.getContent()));
     }
 

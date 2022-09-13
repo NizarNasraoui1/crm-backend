@@ -1,5 +1,6 @@
 package com.crm.Crm.Repository;
 
+import com.crm.Crm.entity.Contact;
 import com.crm.Crm.entity.CrmBaseEntity;
 import com.crm.Crm.generic.GenericRepository;
 import org.springframework.context.annotation.Primary;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @NoRepositoryBean

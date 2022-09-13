@@ -1,6 +1,7 @@
 package com.crm.Crm.Repository;
 
 import com.crm.Crm.entity.Contact;
+import com.crm.Crm.entity.CrmBaseEntity;
 import com.crm.Crm.generic.GenericRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

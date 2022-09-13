@@ -41,13 +41,13 @@ public class ContactController extends CrmBaseEntityController{
 
 
     @PostMapping("/filter")
-    public ResponseEntity<FilteredPageWrapper<CrmBaseEntityDto>> filter(@RequestParam(value = "page",required = false,defaultValue = "0") int page,
+    public ResponseEntity<FilteredPageWrapper<ContactDto>> filter(@RequestParam(value = "page",required = false,defaultValue = "0") int page,
                                                                         @RequestParam(value="pageSize",required = false,defaultValue = "10") int pageSize,
                                                                         @RequestParam(value = "sortDirection",required = false,defaultValue = "ASC") String sortDirection,
                                                                         @RequestParam(value = "sortField",required = false)String sortField,
                                                                         @RequestParam(value = "searchWord",required = false,defaultValue = "")String searchWord,
                                                                         @RequestBody SearchFields searchFields){
-        return new ResponseEntity<>(this.contactService.getCrmBaseEntityFilteredPage(searchWord,searchFields,page, pageSize,sortField, sortDirection), HttpStatus.OK);
+        return new ResponseEntity<>(this.contactService.getContactFilteredPage(searchWord,searchFields,page, pageSize,sortField, sortDirection), HttpStatus.OK);
 
     }
 
