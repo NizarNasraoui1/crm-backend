@@ -13,7 +13,6 @@ import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Contact extends CrmBaseEntity {
     @Id
@@ -24,6 +23,12 @@ public class Contact extends CrmBaseEntity {
     String address;
     String email;
 
-
-
+    public Contact(Long id, List<File> fileList, List<Note> noteList, Long id1, String firstName, String lastName, String address, String email) {
+        super(id, fileList, noteList);
+        this.id = id1;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.email = email;
+    }
 }

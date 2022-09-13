@@ -5,14 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.Date;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class GenericEntityDto {
 
     private Long id;
-    Date createDate;
-
+    private Date createDate;
     private Date modifyDate;
 
 

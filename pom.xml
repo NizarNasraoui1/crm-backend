@@ -8,11 +8,11 @@
 		<version>2.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.toubibnet</groupId>
+	<groupId>com.CRM</groupId>
 	<artifactId>toubibnet</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>toubibnet</name>
-	<description>clone of med.tn</description>
+	<name>CRM</name>
+	<description>CRM app</description>
 	<properties>
 		<java.version>1.8</java.version>
 		<springdoc-openapi-bom.version>1.5.4</springdoc-openapi-bom.version>
