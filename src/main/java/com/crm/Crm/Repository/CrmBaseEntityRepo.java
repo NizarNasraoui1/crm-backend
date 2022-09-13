@@ -12,5 +12,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 
 @NoRepositoryBean
-public interface CrmBaseEntityRepo extends GenericRepository<CrmBaseEntity>,JpaSpecificationExecutor<CrmBaseEntity> {
+public interface CrmBaseEntityRepo extends JpaRepository<CrmBaseEntity,Long>,JpaSpecificationExecutor<CrmBaseEntity> {
 }

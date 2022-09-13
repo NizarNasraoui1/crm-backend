@@ -1,13 +1,10 @@
 package com.crm.Crm.generic;
 
-import com.crm.Crm.dto.SearchFields;
-import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 public abstract class GenericController<T,D,R extends GenericRepository<T>,M extends GenericMapper<T,D>> {

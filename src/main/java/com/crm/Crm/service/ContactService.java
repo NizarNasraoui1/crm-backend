@@ -1,18 +1,18 @@
 package com.crm.Crm.service;
 
-import com.crm.Crm.Exception.SearchFieldNotFoundException;
 import com.crm.Crm.dto.ContactDto;
-import com.crm.Crm.dto.SearchConfiguration;
-import com.crm.Crm.dto.SearchFields;
-import com.crm.Crm.entity.Contact;
-import com.crm.Crm.generic.GenericService;
-import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
+import com.crm.Crm.dto.commons.SearchConfiguration;
 
-import java.util.List;
+public interface ContactService extends CrmBaseEntityService{
 
-public interface ContactService extends CrmBaseEntityService {
+    ContactDto findContactById(Long id);
+
+    ContactDto saveContact(ContactDto contactDto);
 
     public ContactDto updateContactDetails(Long id,ContactDto contactDto);
 
     SearchConfiguration getSearchParams();
+
+   // FilteredPageWrapper<ContactDto> getFilteredPage(String searchWord, SearchFields searchFields, int page, int pageSize, String sortField, String sortDirection);
+
 }

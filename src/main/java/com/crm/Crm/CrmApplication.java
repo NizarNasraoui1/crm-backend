@@ -3,6 +3,7 @@ package com.crm.Crm;
 import com.crm.Crm.entity.Role;
 import com.crm.Crm.entity.User;
 //import com.crm.Crm.service.UserService;
+import com.crm.Crm.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

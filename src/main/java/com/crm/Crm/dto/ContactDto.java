@@ -1,5 +1,6 @@
 package com.crm.Crm.dto;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.*;
 
 import java.util.Date;

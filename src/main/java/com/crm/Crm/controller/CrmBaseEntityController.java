@@ -1,40 +1,31 @@
 package com.crm.Crm.controller;
 
-import com.crm.Crm.Repository.ContactRepository;
-import com.crm.Crm.Repository.CrmBaseEntityRepo;
-import com.crm.Crm.dto.ContactDto;
 import com.crm.Crm.dto.CrmBaseEntityDto;
-import com.crm.Crm.dto.SearchFields;
-import com.crm.Crm.entity.Contact;
-import com.crm.Crm.entity.CrmBaseEntity;
-import com.crm.Crm.generic.GenericController;
-import com.crm.Crm.generic.GenericMapper;
-import com.crm.Crm.generic.GenericService;
-import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
-import com.crm.Crm.mapper.ContactMapper;
-import com.crm.Crm.mapper.CrmBaseEntityMapper;
 import com.crm.Crm.service.CrmBaseEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-public class CrmBaseEntityController extends GenericController<CrmBaseEntity, CrmBaseEntityDto, CrmBaseEntityRepo, CrmBaseEntityMapper> {
+public class CrmBaseEntityController {
     @Autowired
     CrmBaseEntityService crmBaseEntityService;
 
-
-    @PostMapping("/filter")
-    public ResponseEntity<FilteredPageWrapper<CrmBaseEntityDto>> filter(@RequestParam(value = "page",required = false,defaultValue = "0") int page,
-                                                         @RequestParam(value="pageSize",required = false,defaultValue = "10") int pageSize,
-                                                         @RequestParam(value = "sortDirection",required = false,defaultValue = "ASC") String sortDirection,
-                                                         @RequestParam(value = "sortField",required = false)String sortField,
-                                                         @RequestParam(value = "searchWord",required = false,defaultValue = "")String searchWord,
-                                                         @RequestBody SearchFields searchFields){
-        return new ResponseEntity<>(this.crmBaseEntityService.getFilteredPage(searchWord,searchFields,page, pageSize,sortField, sortDirection), HttpStatus.OK);
-
+    @GetMapping("/{id}")
+    public ResponseEntity<CrmBaseEntityDto>findById(@PathVariable Long id){
+        return new ResponseEntity<>(crmBaseEntityService.getCrmBaseEntityById(id),HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+        try {
+            crmBaseEntityService.deleteCrmBaseEntityById(id);
+            return new ResponseEntity( HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity("delete error!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }

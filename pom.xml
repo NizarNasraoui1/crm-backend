@@ -14,7 +14,7 @@
 	<name>CRM</name>
 	<description>CRM app</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>17</java.version>
 		<springdoc-openapi-bom.version>1.5.4</springdoc-openapi-bom.version>
 	</properties>
 	<dependencies>

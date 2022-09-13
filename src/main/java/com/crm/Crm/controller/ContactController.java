@@ -1,12 +1,10 @@
 package com.crm.Crm.controller;
 
-import com.crm.Crm.Exception.SearchFieldNotFoundException;
-import com.crm.Crm.dto.SearchConfiguration;
-import com.crm.Crm.dto.SearchFields;
-import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
-import com.crm.Crm.generic.GenericController;
+import com.crm.Crm.dto.CrmBaseEntityDto;
+import com.crm.Crm.dto.commons.SearchConfiguration;
+import com.crm.Crm.dto.commons.SearchFields;
+import com.crm.Crm.dto.commons.FilteredPageWrapper;
 import com.crm.Crm.dto.ContactDto;
-import com.crm.Crm.entity.Contact;
 import com.crm.Crm.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,9 +13,45 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/contact")
-public class ContactController extends CrmBaseEntityController {
+public class ContactController extends CrmBaseEntityController{
     @Autowired
     ContactService contactService;
+
+
+
+    @PostMapping
+    public ResponseEntity<ContactDto> save(@RequestBody ContactDto entityDto) {
+        try {
+            return new ResponseEntity(contactService.saveContact(entityDto), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity("save error!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping
+    public ResponseEntity<ContactDto> update(@RequestBody ContactDto entityDto) {
+        try {
+            return new ResponseEntity(contactService.saveContact(entityDto), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity("save error!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PostMapping("/filter")
+    public ResponseEntity<FilteredPageWrapper<CrmBaseEntityDto>> filter(@RequestParam(value = "page",required = false,defaultValue = "0") int page,
+                                                                        @RequestParam(value="pageSize",required = false,defaultValue = "10") int pageSize,
+                                                                        @RequestParam(value = "sortDirection",required = false,defaultValue = "ASC") String sortDirection,
+                                                                        @RequestParam(value = "sortField",required = false)String sortField,
+                                                                        @RequestParam(value = "searchWord",required = false,defaultValue = "")String searchWord,
+                                                                        @RequestBody SearchFields searchFields){
+        return new ResponseEntity<>(this.contactService.getCrmBaseEntityFilteredPage(searchWord,searchFields,page, pageSize,sortField, sortDirection), HttpStatus.OK);
+
+    }
+
+
     @PutMapping("/details/{id}")
     public ResponseEntity<ContactDto> updateContactDetails(@PathVariable("id")Long id,@RequestBody ContactDto contactDto){
         return new ResponseEntity<>(contactService.updateContactDetails(id,contactDto),HttpStatus.OK);

@@ -1,15 +1,17 @@
 package com.crm.Crm.service;
 
-import com.crm.Crm.Repository.CrmBaseEntityRepo;
-import com.crm.Crm.dto.CrmBaseEntityDto;
-import com.crm.Crm.dto.NoteDto;
-import com.crm.Crm.dto.SearchFields;
-import com.crm.Crm.entity.CrmBaseEntity;
-import com.crm.Crm.generic.GenericService;
-import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
-import com.crm.Crm.mapper.CrmBaseEntityMapper;
+import com.crm.Crm.dto.*;
+import com.crm.Crm.dto.commons.FilteredPageWrapper;
+import com.crm.Crm.dto.commons.SearchConfiguration;
+import com.crm.Crm.dto.commons.SearchFields;
 
-public interface CrmBaseEntityService extends GenericService<CrmBaseEntity, CrmBaseEntityDto, CrmBaseEntityRepo, CrmBaseEntityMapper> {
-    FilteredPageWrapper<CrmBaseEntityDto> getFilteredPage(String searchWord, SearchFields searchFields, int page, int pageSize, String sortField, String sortDirection);
+public interface CrmBaseEntityService{
+
+    CrmBaseEntityDto getCrmBaseEntityById(Long id);
+
+    public void deleteCrmBaseEntityById(Long id);
+
+    SearchConfiguration getSearchParams();
+    FilteredPageWrapper<CrmBaseEntityDto> getCrmBaseEntityFilteredPage(String searchWord, SearchFields searchFields, int page, int pageSize, String sortField, String sortDirection);
     NoteDto getNoteByCrmBaseEntityNote(Long id);
 }

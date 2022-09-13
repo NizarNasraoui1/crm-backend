@@ -1,5 +1,6 @@
-package com.crm.Crm.dto;
+package com.crm.Crm.dto.commons;
 
+import com.crm.Crm.dto.ParamDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

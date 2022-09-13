@@ -1,18 +1,10 @@
 package com.crm.Crm.generic.Impl;
 
-import com.crm.Crm.dto.SearchFields;
 import com.crm.Crm.entity.CrmBaseEntity;
 import com.crm.Crm.generic.*;
-import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 public class GenericServiceImpl<T,D,R extends GenericRepository<T>,M extends GenericMapper<T,D>> implements GenericService<T,D,R,M> {
     M mapper;
