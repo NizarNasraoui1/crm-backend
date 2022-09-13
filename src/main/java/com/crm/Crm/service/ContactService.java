@@ -11,7 +11,6 @@ import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
 import java.util.List;
 
 public interface ContactService extends CrmBaseEntityService {
-    public FilteredPageWrapper<ContactDto> getContactFilteredPage(int page, int rows, String searchWord, SearchFields searchFields, String sortField) throws SearchFieldNotFoundException;
 
     public ContactDto updateContactDetails(Long id,ContactDto contactDto);
 

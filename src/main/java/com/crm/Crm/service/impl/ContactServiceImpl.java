@@ -2,7 +2,6 @@ package com.crm.Crm.service.impl;
 
 import com.crm.Crm.Exception.SearchFieldNotFoundException;
 import com.crm.Crm.Repository.ContactRepository;
-import com.crm.Crm.Repository.ContactSearchCriteria;
 import com.crm.Crm.dto.ContactDto;
 import com.crm.Crm.dto.ParamDto;
 import com.crm.Crm.dto.SearchConfiguration;
@@ -31,23 +30,12 @@ import java.util.List;
 @Service
 @Transactional
 public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements ContactService {
-    @Autowired
-    ContactSearchCriteria contactSearchCriteria;
+
     @Autowired
     ContactRepository contactRepository;
     @Autowired
     ContactMapper contactMapper;
-    public FilteredPageWrapper<ContactDto>getContactFilteredPage(int page, int rows, String searchWord, SearchFields searchFields,String sortField) throws SearchFieldNotFoundException {
-            List<Field> contactfields=Arrays.asList(Contact.class.getDeclaredFields());
-            for(Field field:contactfields){
-                if(!contactfields.contains(field)){
-                    throw new SearchFieldNotFoundException("invalid search fields");
-                }
-            }
-            List<? extends CrmBaseEntity> crmBaseEntities=contactRepository.getFilteredPage( page,  rows, "ali", searchFields.getSearchFields(), sortField,Contact.class);
-    List<ContactDto> contactDtoList=contactMapper.toDtos(new ArrayList<>());
-        return new FilteredPageWrapper<ContactDto>(contactDtoList.size(),contactDtoList);
-    }
+
 
     @Override
     public ContactDto updateContactDetails(Long id, ContactDto contactDto) {

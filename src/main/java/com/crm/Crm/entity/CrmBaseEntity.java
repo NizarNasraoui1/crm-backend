@@ -1,6 +1,5 @@
 package com.crm.Crm.entity;
 
-import com.crm.Crm.generic.GenericEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,11 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class CrmBaseEntity extends GenericEntity {
+public class CrmBaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @OneToMany
     private List<File> fileList;
     @OneToMany

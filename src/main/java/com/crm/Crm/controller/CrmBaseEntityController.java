@@ -4,7 +4,6 @@ import com.crm.Crm.dto.CrmBaseEntityDto;
 import com.crm.Crm.dto.SearchFields;
 import com.crm.Crm.entity.CrmBaseEntity;
 import com.crm.Crm.generic.GenericController;
-import com.crm.Crm.generic.GenericEntity;
 import com.crm.Crm.generic.GenericMapper;
 import com.crm.Crm.generic.GenericService;
 import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-public class CrmBaseEntityController extends GenericController<CrmBaseEntity, CrmBaseEntityDto, CrmBaseEntityMapper> {
+public class CrmBaseEntityController{
     @Autowired
     CrmBaseEntityService crmBaseEntityService;
 

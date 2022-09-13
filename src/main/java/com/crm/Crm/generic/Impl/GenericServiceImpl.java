@@ -1,6 +1,5 @@
 package com.crm.Crm.generic.Impl;
 
-import com.crm.Crm.Util.PaginationAndFilteringUtil;
 import com.crm.Crm.dto.SearchFields;
 import com.crm.Crm.entity.CrmBaseEntity;
 import com.crm.Crm.generic.*;
@@ -15,11 +14,9 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
-public class GenericServiceImpl<T extends GenericEntity,D,M extends GenericMapper<T,D>> implements GenericService<T,D,M> {
-    @Autowired
+public class GenericServiceImpl<T,D,R extends GenericRepository<T>,M extends GenericMapper<T,D>> implements GenericService<T,D,R,M> {
     M mapper;
-    @Autowired
-    protected GenericRepository<T> genericRepository;
+    R genericRepository;
 
     @Override
     public D findById(Long id) {

@@ -6,7 +6,6 @@ import com.crm.Crm.dto.CrmBaseEntityDto;
 import com.crm.Crm.dto.NoteDto;
 import com.crm.Crm.dto.SearchFields;
 import com.crm.Crm.entity.CrmBaseEntity;
-import com.crm.Crm.generic.GenericEntity;
 import com.crm.Crm.generic.GenericMapper;
 import com.crm.Crm.generic.GenericSearchSpecification;
 import com.crm.Crm.generic.Impl.GenericServiceImpl;
@@ -25,7 +24,7 @@ import java.util.List;
 
 @Service("crmBaseEntityService")
 @Primary
-public class CrmBaseEntityServiceImpl extends GenericServiceImpl<CrmBaseEntity,CrmBaseEntityDto,CrmBaseEntityMapper> implements CrmBaseEntityService {
+public class CrmBaseEntityServiceImpl extends GenericServiceImpl<CrmBaseEntity,CrmBaseEntityDto,CrmBaseEntityRepo,CrmBaseEntityMapper> implements CrmBaseEntityService {
 
     @Autowired
     protected CrmBaseEntityMapper mapper;

@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
-public abstract class GenericController<T extends GenericEntity,D,M extends GenericMapper<T,D>> {
+public abstract class GenericController<T,D,R extends GenericRepository<T>,M extends GenericMapper<T,D>> {
 
     @Autowired
-    protected GenericService<T,D,M> service;
+    protected GenericService<T,D,R,M> service;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody D entityDto) {
+    public ResponseEntity<D> save(@RequestBody D entityDto) {
         try {
             return new ResponseEntity(service.save(entityDto), HttpStatus.OK);
         } catch (Exception e) {
@@ -26,7 +26,7 @@ public abstract class GenericController<T extends GenericEntity,D,M extends Gene
     }
 
     @PutMapping
-    public ResponseEntity<Object> update(@RequestBody D entityDto) {
+    public ResponseEntity<D> update(@RequestBody D entityDto) {
         try {
             return new ResponseEntity(service.save(entityDto), HttpStatus.OK);
         } catch (Exception e) {
@@ -36,7 +36,7 @@ public abstract class GenericController<T extends GenericEntity,D,M extends Gene
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object>findById(@PathVariable Long id){
+    public ResponseEntity<D>findById(@PathVariable Long id){
         return new ResponseEntity<>(service.findById(id),HttpStatus.OK);
     }
 

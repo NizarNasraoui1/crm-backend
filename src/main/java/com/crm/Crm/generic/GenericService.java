@@ -6,7 +6,7 @@ import com.crm.Crm.generic.wrapper.FilteredPageWrapper;
 import java.util.List;
 import java.util.Optional;
 
-public interface GenericService<T extends GenericEntity,D,M extends GenericMapper<T,D>>  {
+public interface GenericService<T,D,R extends GenericRepository<T>,M extends GenericMapper<T,D>>  {
 
     D findById(Long id);
     List<D> findAll() throws Exception;
