@@ -1,9 +1,9 @@
 package com.crm.Crm.service;
 
 import com.crm.Crm.dto.*;
-import com.crm.Crm.dto.commons.FilteredPageWrapper;
 import com.crm.Crm.dto.commons.SearchConfiguration;
-import com.crm.Crm.dto.commons.SearchFields;
+
+import java.util.List;
 
 public interface CrmBaseEntityService{
 
@@ -12,5 +12,8 @@ public interface CrmBaseEntityService{
     public void deleteCrmBaseEntityById(Long id);
 
     SearchConfiguration getSearchParams();
-    NoteDto getNoteByCrmBaseEntityNote(Long id);
+    NoteDto getCrmBaseEntityNoteById(Long id);
+
+    CrmBaseEntityDto addNoteToCrmBaseEntity(Long id,NoteDto noteDto);
+
 }

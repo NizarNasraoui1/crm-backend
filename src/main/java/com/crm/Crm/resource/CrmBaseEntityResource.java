@@ -1,13 +1,14 @@
-package com.crm.Crm.controller;
+package com.crm.Crm.resource;
 
 import com.crm.Crm.dto.CrmBaseEntityDto;
+import com.crm.Crm.dto.NoteDto;
 import com.crm.Crm.service.CrmBaseEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-public class CrmBaseEntityController {
+public class CrmBaseEntityResource {
     @Autowired
     CrmBaseEntityService crmBaseEntityService;
 
@@ -25,6 +26,16 @@ public class CrmBaseEntityController {
             e.printStackTrace();
             return new ResponseEntity("delete error!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("{id}/note")
+    public ResponseEntity<CrmBaseEntityDto>saveNoteToCrmBaseEntity(@PathVariable("id")Long id,@RequestBody NoteDto noteDto){
+        return new ResponseEntity<>(crmBaseEntityService.addNoteToCrmBaseEntity(id,noteDto),HttpStatus.OK);
+    }
+
+    @GetMapping("{id}/note")
+    public ResponseEntity<CrmBaseEntityDto>getNoteToCrmBaseEntity(@PathVariable("id")Long id,@RequestBody NoteDto noteDto){
+        return new ResponseEntity<>(crmBaseEntityService.addNoteToCrmBaseEntity(id,noteDto),HttpStatus.OK);
     }
 
 

@@ -1,4 +1,4 @@
-package com.crm.Crm.Repository;
+package com.crm.Crm.repository;
 
 import com.crm.Crm.entity.CrmBaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

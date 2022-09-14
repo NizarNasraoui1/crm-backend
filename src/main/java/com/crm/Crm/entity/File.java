@@ -9,13 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+//@Entity
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
 public class File{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    String path;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+//    String path;
 }

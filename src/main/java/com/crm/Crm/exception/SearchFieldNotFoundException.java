@@ -1,4 +1,4 @@
-package com.crm.Crm.Exception;
+package com.crm.Crm.exception;
 
 public class SearchFieldNotFoundException extends Exception{
     public SearchFieldNotFoundException(String msg){

@@ -1,6 +1,5 @@
-package com.crm.Crm.controller;
+package com.crm.Crm.resource;
 
-import com.crm.Crm.dto.CrmBaseEntityDto;
 import com.crm.Crm.dto.commons.SearchConfiguration;
 import com.crm.Crm.dto.commons.SearchFields;
 import com.crm.Crm.dto.commons.FilteredPageWrapper;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/contact")
-public class ContactController extends CrmBaseEntityController{
+public class ContactResource extends CrmBaseEntityResource {
     @Autowired
     ContactService contactService;
 
@@ -29,7 +28,7 @@ public class ContactController extends CrmBaseEntityController{
         }
     }
 
-    @PutMapping
+    @PutMapping("/details")
     public ResponseEntity<ContactDto> update(@RequestBody ContactDto entityDto) {
         try {
             return new ResponseEntity(contactService.saveContact(entityDto), HttpStatus.OK);

@@ -1,7 +1,7 @@
 package com.crm.Crm.service.impl;
 
-import com.crm.Crm.Repository.ContactRepository;
-import com.crm.Crm.Repository.CrmBaseEntityRepo;
+import com.crm.Crm.repository.ContactRepository;
+import com.crm.Crm.repository.CrmBaseEntityRepo;
 import com.crm.Crm.Util.PaginationAndFilteringUtil;
 import com.crm.Crm.dto.*;
 import com.crm.Crm.dto.commons.FilteredPageWrapper;

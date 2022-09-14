@@ -1,4 +1,4 @@
-package com.crm.Crm.Repository;
+package com.crm.Crm.repository;
 
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.crm.Crm.Exception;
+package com.crm.Crm.exception;
 
 public class ResourceNotFoundException extends Exception{
     public ResourceNotFoundException(String message){

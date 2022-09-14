@@ -1,7 +1,7 @@
 package com.crm.Crm.service.impl;
 
-import com.crm.Crm.Repository.RoleRepo;
-import com.crm.Crm.Repository.UserRepo;
+import com.crm.Crm.repository.RoleRepo;
+import com.crm.Crm.repository.UserRepo;
 import com.crm.Crm.entity.Role;
 import com.crm.Crm.entity.User;
 import com.crm.Crm.service.UserService;
@@ -20,11 +20,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @author Get Arrays (https://www.getarrays.io/)
- * @version 1.0
- * @since 7/10/2021
- */
 @Service @RequiredArgsConstructor @Transactional @Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepo userRepo;

@@ -1,31 +1,24 @@
 package com.crm.Crm.service.impl;
 
-import com.crm.Crm.Repository.CrmBaseEntityRepo;
-import com.crm.Crm.Util.PaginationAndFilteringUtil;
-import com.crm.Crm.dto.ContactDto;
+import com.crm.Crm.repository.CrmBaseEntityRepo;
 import com.crm.Crm.dto.CrmBaseEntityDto;
 import com.crm.Crm.dto.NoteDto;
 import com.crm.Crm.dto.commons.SearchConfiguration;
-import com.crm.Crm.dto.commons.SearchFields;
 import com.crm.Crm.entity.Contact;
 import com.crm.Crm.entity.CrmBaseEntity;
-import com.crm.Crm.dto.commons.FilteredPageWrapper;
 import com.crm.Crm.mapper.ContactMapper;
 import com.crm.Crm.mapper.CrmBaseEntityMapper;
+import com.crm.Crm.mapper.NoteMapper;
 import com.crm.Crm.service.CrmBaseEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("crmBaseEntityService")
 @Primary
+@Transactional
 public class CrmBaseEntityServiceImpl implements CrmBaseEntityService {
 
     @Autowired
@@ -34,6 +27,9 @@ public class CrmBaseEntityServiceImpl implements CrmBaseEntityService {
     private ContactMapper contactMapper;
     @Autowired
     private CrmBaseEntityRepo crmBaseEntityRepo;
+
+    @Autowired
+    private NoteMapper noteMapper;
 
 
     @Override
@@ -56,7 +52,16 @@ public class CrmBaseEntityServiceImpl implements CrmBaseEntityService {
     }
 
     @Override
-    public NoteDto getNoteByCrmBaseEntityNote(Long id) {
+    public NoteDto getCrmBaseEntityNoteById(Long id) {
         return null;
     }
+
+    @Override
+    public CrmBaseEntityDto addNoteToCrmBaseEntity(Long id,NoteDto noteDto) {
+        CrmBaseEntity crmBaseEntity=crmBaseEntityRepo.findById(id).orElseThrow(()->new ResourceNotFoundException());
+        crmBaseEntity.getNoteList().add(noteMapper.toBo(noteDto));
+        return crmBaseEntityMapper.toDto(crmBaseEntityRepo.save(crmBaseEntityRepo.save(crmBaseEntity)));
+    }
+
+
 }
