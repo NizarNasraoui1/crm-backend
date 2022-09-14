@@ -24,7 +24,7 @@ public class ContactResource extends CrmBaseEntityResource {
             return new ResponseEntity(contactService.saveContact(entityDto), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity("save error!", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("save contact error!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -34,7 +34,7 @@ public class ContactResource extends CrmBaseEntityResource {
             return new ResponseEntity(contactService.saveContact(entityDto), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity("save error!", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("update contact error!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

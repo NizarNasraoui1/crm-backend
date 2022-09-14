@@ -6,10 +6,7 @@ import com.crm.Crm.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +20,15 @@ public class NoteResource {
     @GetMapping("/crmBaseEntity/{id}")
     public ResponseEntity<List<NoteDto>>getAllCrmBaseEntityNotes(@PathVariable("id")Long id){
         return new ResponseEntity<>(noteService.getNoteListByAccountId(id), HttpStatus.OK);
+    }
+
+    @PostMapping("/crmBaseEntity/{id}")
+    public ResponseEntity<NoteDto>saveNote(@PathVariable("id")Long id,@RequestBody NoteDto noteDto){
+        return new ResponseEntity<>(noteService.saveNote(id,noteDto),HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<NoteDto>updateNote(@RequestBody NoteDto noteDto){
+        return new ResponseEntity<>(noteService.updateNote(noteDto),HttpStatus.OK);
     }
 }
