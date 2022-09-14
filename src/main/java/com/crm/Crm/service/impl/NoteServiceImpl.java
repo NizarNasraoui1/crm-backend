@@ -42,4 +42,9 @@ public class NoteServiceImpl implements NoteService {
         note.setContent(noteDto.getContent());
         return noteMapper.toDto(noteRepository.save(note));
     }
+
+    @Override
+    public void deleteNote(Long id) {
+        this.noteRepository.deleteById(id);
+    }
 }

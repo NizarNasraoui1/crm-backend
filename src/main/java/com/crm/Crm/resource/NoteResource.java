@@ -31,4 +31,9 @@ public class NoteResource {
     public ResponseEntity<NoteDto>updateNote(@RequestBody NoteDto noteDto){
         return new ResponseEntity<>(noteService.updateNote(noteDto),HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteNote(@PathVariable("id")Long id){
+        noteService.deleteNote(id);
+    }
 }

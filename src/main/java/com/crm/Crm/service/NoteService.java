@@ -9,4 +9,6 @@ public interface NoteService {
     public NoteDto saveNote(Long id,NoteDto noteDto);
 
     public NoteDto updateNote(NoteDto noteDto);
+
+    public void deleteNote(Long id);
 }
