@@ -1,7 +1,7 @@
 package com.crm.Crm.service.impl;
 
-import com.crm.Crm.repository.RoleRepo;
-import com.crm.Crm.repository.UserRepo;
+import com.crm.Crm.repository.RoleRepository;
+import com.crm.Crm.repository.UserRepository;
 import com.crm.Crm.entity.Role;
 import com.crm.Crm.entity.User;
 import com.crm.Crm.service.UserService;
@@ -22,14 +22,14 @@ import java.util.List;
 
 @Service @RequiredArgsConstructor @Transactional @Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
-    private final UserRepo userRepo;
-    private final RoleRepo roleRepo;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByUsername(username);
+        User user = userRepository.findByUsername(username);
         if(user == null) {
             log.error("User not found in the database");
             throw new UsernameNotFoundException("User not found in the database");
@@ -47,32 +47,32 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User saveUser(User user) {
         log.info("Saving new user {} to the database", user.getName());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepo.save(user);
+        return userRepository.save(user);
     }
 
     @Override
     public Role saveRole(Role role) {
         log.info("Saving new role {} to the database", role.getName());
-        return roleRepo.save(role);
+        return roleRepository.save(role);
     }
 
     @Override
     public void addRoleToUser(String username, String roleName) {
         log.info("Adding role {} to user {}", roleName, username);
-        User user = userRepo.findByUsername(username);
-        Role role = roleRepo.findByName(roleName);
+        User user = userRepository.findByUsername(username);
+        Role role = roleRepository.findByName(roleName);
         user.getRoles().add(role);
     }
 
     @Override
     public User getUser(String username) {
         log.info("Fetching user {}", username);
-        return userRepo.findByUsername(username);
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public List<User> getUsers() {
         log.info("Fetching all users");
-        return userRepo.findAll();
+        return userRepository.findAll();
     }
 }

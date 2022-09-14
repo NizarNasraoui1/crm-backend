@@ -1,7 +1,7 @@
 package com.crm.Crm.service.impl;
 
 import com.crm.Crm.repository.ContactRepository;
-import com.crm.Crm.repository.CrmBaseEntityRepo;
+import com.crm.Crm.repository.CrmBaseEntityRepository;
 import com.crm.Crm.Util.PaginationAndFilteringUtil;
 import com.crm.Crm.dto.*;
 import com.crm.Crm.dto.commons.FilteredPageWrapper;
@@ -37,7 +37,7 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
     ContactRepository contactRepository;
 
     @Autowired
-    CrmBaseEntityRepo crmBaseEntityRepo;
+    CrmBaseEntityRepository crmBaseEntityRepository;
     @Autowired
     ContactMapper contactMapper;
 
@@ -90,7 +90,7 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
                     return criteriaBuilder.like(contactRoot.get(searchField), searchWord);
                 }));
                 Specification<CrmBaseEntity> contactSpecification = contactSpecificationList.stream().reduce(Specification::and).orElse(null);
-                resultPage = crmBaseEntityRepo.findAll(contactSpecification, pageRequest);
+                resultPage = crmBaseEntityRepository.findAll(contactSpecification, pageRequest);
 
             }
         }
