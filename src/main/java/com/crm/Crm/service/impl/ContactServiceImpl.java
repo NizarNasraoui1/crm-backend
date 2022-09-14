@@ -1,7 +1,9 @@
 package com.crm.Crm.service.impl;
 
 import com.crm.Crm.Repository.ContactRepository;
+import com.crm.Crm.Repository.CrmBaseEntityRepo;
 import com.crm.Crm.Util.PaginationAndFilteringUtil;
+import com.crm.Crm.Util.SpecificationUtil;
 import com.crm.Crm.dto.*;
 import com.crm.Crm.dto.commons.FilteredPageWrapper;
 import com.crm.Crm.dto.commons.SearchConfiguration;
@@ -12,6 +14,7 @@ import com.crm.Crm.enumeration.ContactSearchFields;
 import com.crm.Crm.enumeration.ContactSortFields;
 import com.crm.Crm.generic.GenericSearchSpecification;
 import com.crm.Crm.mapper.ContactMapper;
+import com.crm.Crm.mapper.CrmBaseEntityMapper;
 import com.crm.Crm.service.ContactService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,10 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -31,8 +37,14 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
 
     @Autowired
     ContactRepository contactRepository;
+
+    @Autowired
+    CrmBaseEntityRepo crmBaseEntityRepo;
     @Autowired
     ContactMapper contactMapper;
+
+    @Autowired
+    CrmBaseEntityMapper crmBaseEntityMapper;
 
 
     @Override
@@ -71,15 +83,24 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
 
     public FilteredPageWrapper<ContactDto> getContactFilteredPage(String searchWord, SearchFields searchFields, int page, int pageSize, String sortField, String sortDirection) {
         PageRequest pageRequest= PaginationAndFilteringUtil.getPaginationRequest(page,pageSize,sortField,sortDirection);
-        GenericSearchSpecification<Contact> genericSearchSpecification=new GenericSearchSpecification<>();
-        Page<CrmBaseEntity> resultPage;
-        if(!searchFields.getSearchFields().isEmpty()){
-            Specification<Contact> filterSpecification= genericSearchSpecification.getGenericSearchSpecification(searchWord, searchFields);
-            resultPage=contactRepository.findAll(filterSpecification,pageRequest);
+        GenericSearchSpecification<CrmBaseEntity> genericSearchSpecification=new GenericSearchSpecification<>();
+        Page<CrmBaseEntity> resultPage = null;
+        if(!searchFields.getSearchFields().isEmpty()) {
+            List<Specification<CrmBaseEntity>> contactSpecificationList = new ArrayList<>();
+            for (String searchField : searchFields.getSearchFields()) {
+                contactSpecificationList.add(((root, criteriaQuery, criteriaBuilder) -> {
+                    Root<Contact> contactRoot = criteriaQuery.from(Contact.class);
+                    return criteriaBuilder.like(contactRoot.get(searchField), searchWord);
+                }));
+                Specification<CrmBaseEntity> contactSpecification = contactSpecificationList.stream().reduce(Specification::and).orElse(null);
+                resultPage = crmBaseEntityRepo.findAll(contactSpecification, pageRequest);
+
+            }
         }
         else{
             resultPage=contactRepository.findAll(pageRequest);
         }
-        return new FilteredPageWrapper<>(resultPage.getTotalPages()*pageSize,contactMapper.toDtos(new ArrayList<>()));
+        List<ContactDto>contactDtoList=resultPage.getContent().stream().map(contact->contactMapper.toDto((Contact) contact)).collect(Collectors.toList());
+        return new FilteredPageWrapper<>(resultPage.getTotalPages()*pageSize,contactDtoList);
     }
 }

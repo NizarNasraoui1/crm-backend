@@ -11,6 +11,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ContactRepository extends CrmBaseEntityRepo {
+public interface ContactRepository extends CrmBaseEntityRepo{
 
 }
