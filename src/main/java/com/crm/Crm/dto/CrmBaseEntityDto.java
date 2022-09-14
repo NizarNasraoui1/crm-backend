@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,5 +18,5 @@ public class CrmBaseEntityDto{
     private Long id;
     private Date createDate;
     private Date modifyDate;
-    List<NoteDto> noteDtoList;
+    private List<NoteDto> noteList;
 }
