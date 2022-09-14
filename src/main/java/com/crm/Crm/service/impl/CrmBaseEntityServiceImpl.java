@@ -9,7 +9,6 @@ import com.crm.Crm.dto.commons.SearchConfiguration;
 import com.crm.Crm.dto.commons.SearchFields;
 import com.crm.Crm.entity.Contact;
 import com.crm.Crm.entity.CrmBaseEntity;
-import com.crm.Crm.generic.GenericSearchSpecification;
 import com.crm.Crm.dto.commons.FilteredPageWrapper;
 import com.crm.Crm.mapper.ContactMapper;
 import com.crm.Crm.mapper.CrmBaseEntityMapper;
@@ -54,20 +53,6 @@ public class CrmBaseEntityServiceImpl implements CrmBaseEntityService {
     @Override
     public SearchConfiguration getSearchParams() {
         return null;
-    }
-
-    public FilteredPageWrapper<CrmBaseEntityDto> getCrmBaseEntityFilteredPage(String searchWord, SearchFields searchFields, int page, int pageSize, String sortField, String sortDirection) {
-        PageRequest pageRequest= PaginationAndFilteringUtil.getPaginationRequest(page,pageSize,sortField,sortDirection);
-        GenericSearchSpecification<CrmBaseEntity> genericSearchSpecification=new GenericSearchSpecification<>();
-        Page<CrmBaseEntity> resultPage;
-        if(!searchFields.getSearchFields().isEmpty()){
-            Specification<CrmBaseEntity> filterSpecification= genericSearchSpecification.getGenericSearchSpecification(searchWord, searchFields);
-            resultPage=crmBaseEntityRepo.findAll(filterSpecification,pageRequest);
-        }
-        else{
-            resultPage=crmBaseEntityRepo.findAll(pageRequest);
-        }
-        return new FilteredPageWrapper<>(resultPage.getTotalPages()*pageSize,crmBaseEntityMapper.toDtos(resultPage.getContent()));
     }
 
     @Override

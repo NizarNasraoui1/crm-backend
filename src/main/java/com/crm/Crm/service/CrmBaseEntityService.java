@@ -12,6 +12,5 @@ public interface CrmBaseEntityService{
     public void deleteCrmBaseEntityById(Long id);
 
     SearchConfiguration getSearchParams();
-    FilteredPageWrapper<CrmBaseEntityDto> getCrmBaseEntityFilteredPage(String searchWord, SearchFields searchFields, int page, int pageSize, String sortField, String sortDirection);
     NoteDto getNoteByCrmBaseEntityNote(Long id);
 }

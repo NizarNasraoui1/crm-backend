@@ -1,4 +1,4 @@
-package com.crm.Crm.generic;
+package com.crm.Crm.mapper;
 
 import org.mapstruct.MapperConfig;
 import org.mapstruct.MappingTarget;
