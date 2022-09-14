@@ -82,7 +82,7 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
     public FilteredPageWrapper<ContactDto> getContactFilteredPage(String searchWord, SearchFields searchFields, int page, int pageSize, String sortField, String sortDirection) {
         PageRequest pageRequest= PaginationAndFilteringUtil.getPaginationRequest(page,pageSize,sortField,sortDirection);
         Page<CrmBaseEntity> resultPage = null;
-        if(!searchFields.getSearchFields().isEmpty()) {
+        if(!searchFields.getSearchFields().isEmpty() && !searchWord.isEmpty()) {
             List<Specification<CrmBaseEntity>> contactSpecificationList = new ArrayList<>();
             for (String searchField : searchFields.getSearchFields()) {
                 contactSpecificationList.add(((root, criteriaQuery, criteriaBuilder) -> {

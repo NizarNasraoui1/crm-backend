@@ -30,7 +30,7 @@ public class CrmBaseEntity {
 
 //    @OneToMany(cascade = CascadeType.ALL)
 //    private List<File> fileList;
-    @OneToMany(mappedBy = "crmBaseEntity",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "crmBaseEntity",cascade = CascadeType.ALL)
     private List<Note>noteList;
 
 
