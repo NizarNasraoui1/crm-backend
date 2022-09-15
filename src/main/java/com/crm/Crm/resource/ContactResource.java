@@ -55,7 +55,7 @@ public class ContactResource extends CrmBaseEntityResource {
     public ResponseEntity<ContactDto> updateContactDetails(@PathVariable("id")Long id,@RequestBody ContactDto contactDto){
         return new ResponseEntity<>(contactService.updateContactDetails(id,contactDto),HttpStatus.OK);
     }
-    @GetMapping("/searchParams")
+    @GetMapping("/search-params")
     public ResponseEntity<SearchConfiguration> getSearchParams() throws ClassNotFoundException {
         return new ResponseEntity<>(this.contactService.getSearchParams(),HttpStatus.OK);
     }

@@ -9,15 +9,13 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class ContactDto extends CrmBaseEntityDto{
-    Long id;
-    String firstName;
-    String lastName;
-    String address;
-    String email;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String email;
 
-    public ContactDto(Long id, Date createDate, Date modifyDate, List<NoteDto> noteDtoList, Long id1, String firstName, String lastName, String address, String email) {
-        super(id, createDate, modifyDate, noteDtoList);
-        this.id = id1;
+    public ContactDto(Long id, Date createDate, Date modifyDate, List<NoteDto> noteList, String firstName, String lastName, String address, String email) {
+        super(id, createDate, modifyDate, noteList);
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;

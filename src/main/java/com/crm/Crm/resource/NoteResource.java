@@ -17,12 +17,12 @@ public class NoteResource {
     @Autowired
     NoteService noteService;
 
-    @GetMapping("/crmBaseEntity/{id}")
+    @GetMapping("/crm-base-entity/{id}")
     public ResponseEntity<List<NoteDto>>getAllCrmBaseEntityNotes(@PathVariable("id")Long id){
         return new ResponseEntity<>(noteService.getNoteListByAccountId(id), HttpStatus.OK);
     }
 
-    @PostMapping("/crmBaseEntity/{id}")
+    @PostMapping("/crm-base-entity/{id}")
     public ResponseEntity<NoteDto>saveNote(@PathVariable("id")Long id,@RequestBody NoteDto noteDto){
         return new ResponseEntity<>(noteService.saveNote(id,noteDto),HttpStatus.OK);
     }

@@ -15,21 +15,18 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Contact extends CrmBaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    String firstName;
-    String lastName;
-    String address;
-    String email;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String email;
 
-    public Contact(Long id, Date createDate, Date modifyDate, List<Note> noteList, Long id1, String firstName, String lastName, String address, String email) {
-        super(id, createDate, modifyDate, noteList);
-        this.id = id1;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.email = email;
-    }
+//    public Contact(Long id, Date createDate, Date modifyDate, List<Note> noteList, String firstName, String lastName, String address, String email) {
+//        super(id, createDate, modifyDate, noteList);
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.address = address;
+//        this.email = email;
+//    }
 }

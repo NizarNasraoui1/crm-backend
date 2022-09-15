@@ -10,12 +10,15 @@ import com.crm.Crm.entity.CrmBaseEntity;
 import com.crm.Crm.mapper.ContactMapper;
 import com.crm.Crm.mapper.CrmBaseEntityMapper;
 import com.crm.Crm.mapper.NoteMapper;
+import com.crm.Crm.repository.NoteRepository;
 import com.crm.Crm.service.CrmBaseEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service("crmBaseEntityService")
 @Primary
@@ -26,6 +29,10 @@ public class CrmBaseEntityServiceImpl implements CrmBaseEntityService {
     protected CrmBaseEntityMapper crmBaseEntityMapper;
     @Autowired
     private ContactMapper contactMapper;
+
+    @Autowired
+    private NoteRepository noteRepository;
+
     @Autowired
     private CrmBaseEntityRepository crmBaseEntityRepository;
 
@@ -64,6 +71,11 @@ public class CrmBaseEntityServiceImpl implements CrmBaseEntityService {
         crmBaseEntity.getNoteList().add(note);
         note.setCrmBaseEntity(crmBaseEntity);
         return crmBaseEntityMapper.toDto(crmBaseEntityRepository.save(crmBaseEntityRepository.save(crmBaseEntity)));
+    }
+
+    @Override
+    public List<NoteDto> getCrmBaseEntityNotes(Long id) {
+        return noteMapper.toDtos(noteRepository.findAllByCrmBaseEntityOrderByModifyDate(id));
     }
 
 

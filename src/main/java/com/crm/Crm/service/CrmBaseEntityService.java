@@ -16,4 +16,6 @@ public interface CrmBaseEntityService{
 
     CrmBaseEntityDto addNoteToCrmBaseEntity(Long id,NoteDto noteDto);
 
+    List<NoteDto> getCrmBaseEntityNotes(Long id);
+
 }

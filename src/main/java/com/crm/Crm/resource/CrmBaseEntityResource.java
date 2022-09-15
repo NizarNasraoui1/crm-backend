@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 public class CrmBaseEntityResource {
     @Autowired
     CrmBaseEntityService crmBaseEntityService;
@@ -18,13 +20,13 @@ public class CrmBaseEntityResource {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         try {
             crmBaseEntityService.deleteCrmBaseEntityById(id);
             return new ResponseEntity( HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity("delete error!", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity( HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -34,8 +36,8 @@ public class CrmBaseEntityResource {
     }
 
     @GetMapping("{id}/note")
-    public ResponseEntity<CrmBaseEntityDto>getNoteToCrmBaseEntity(@PathVariable("id")Long id,@RequestBody NoteDto noteDto){
-        return new ResponseEntity<>(crmBaseEntityService.addNoteToCrmBaseEntity(id,noteDto),HttpStatus.OK);
+    public ResponseEntity<List<NoteDto>>getCrmBaseEntityNotes(@PathVariable("id")Long id, @RequestBody NoteDto noteDto){
+        return new ResponseEntity<>(crmBaseEntityService.getCrmBaseEntityNotes(id),HttpStatus.OK);
     }
 
 
