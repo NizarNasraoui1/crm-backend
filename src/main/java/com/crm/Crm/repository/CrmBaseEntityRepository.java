@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Primary
 public interface CrmBaseEntityRepository extends JpaRepository<CrmBaseEntity,Long>,JpaSpecificationExecutor<CrmBaseEntity> {
+
 }
