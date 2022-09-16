@@ -5,11 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -22,6 +19,9 @@ public class Opportunity extends CrmBaseEntity{
     private OpportunityStageEnum stage;
     private LocalDateTime closeDate;
 
+    @ManyToMany
+    @JoinTable(name="opportunity_contact")
+    List<Contact> contactList;
 //    public Opportunity(Long id, Date createDate, Date modifyDate, List<Note> noteList, String name, OpportunityStageEnum stage, LocalDateTime closeDate) {
 //        super(id, createDate, modifyDate, noteList);
 //        this.name = name;

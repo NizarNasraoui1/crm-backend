@@ -4,7 +4,7 @@ public enum OpportunityStageEnum {
     QALIFICATION("qualification"),
     MEETING_SCHEDULED("meeting scheduled"),
     PROPOSAL("proposal"),
-    NEGOCIATION("negotiation"),
+    NEGOCIATION("negociation"),
     CLOSED("closed");
 
     public String label;

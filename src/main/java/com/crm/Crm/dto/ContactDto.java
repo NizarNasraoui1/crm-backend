@@ -13,12 +13,14 @@ public class ContactDto extends CrmBaseEntityDto{
     private String lastName;
     private String address;
     private String email;
+    private List<OpportunityDto> opportunityList;
 
-    public ContactDto(Long id, Date createDate, Date modifyDate, List<NoteDto> noteList, String firstName, String lastName, String address, String email) {
+    public ContactDto(Long id, Date createDate, Date modifyDate, List<NoteDto> noteList, String firstName, String lastName, String address, String email, List<OpportunityDto> opportunityList) {
         super(id, createDate, modifyDate, noteList);
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.email = email;
+        this.opportunityList = opportunityList;
     }
 }
