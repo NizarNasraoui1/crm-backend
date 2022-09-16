@@ -1,5 +1,6 @@
 package com.crm.Crm.resource;
 
+import com.crm.Crm.dto.ContactDto;
 import com.crm.Crm.dto.OpportunityDto;
 import com.crm.Crm.entity.Opportunity;
 import com.crm.Crm.enumeration.OpportunityStageEnum;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("api/opportunity")
-public class OpportunityResource {
+public class OpportunityResource extends CrmBaseEntityResource {
     @Autowired
     OpportunityService opportunityService;
 
@@ -26,5 +27,10 @@ public class OpportunityResource {
     @GetMapping
     public ResponseEntity<List<OpportunityDto>> getAllOpportunitiesByStage(@RequestParam(value = "stage",required = true) OpportunityStageEnum stage){
         return new ResponseEntity<>(opportunityService.getAllOpportunitiesByStage(stage),HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/contacts")
+    public ResponseEntity<List<ContactDto>> getOpportunityContacts(@PathVariable("id")Long id){
+        return new ResponseEntity<>(opportunityService.getOpportunityContacts(id),HttpStatus.OK);
     }
 }

@@ -1,8 +1,7 @@
 package com.crm.Crm.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -19,14 +18,8 @@ public class Contact extends CrmBaseEntity {
     private String address;
     private String email;
 
-    @ManyToMany(mappedBy = "contactList",cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "contactList")
     List<Opportunity> opportunityList;
 
-//    public Contact(Long id, Date createDate, Date modifyDate, List<Note> noteList, String firstName, String lastName, String address, String email) {
-//        super(id, createDate, modifyDate, noteList);
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.address = address;
-//        this.email = email;
-//    }
+
 }
