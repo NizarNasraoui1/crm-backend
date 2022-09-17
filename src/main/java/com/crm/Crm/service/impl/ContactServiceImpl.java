@@ -1,5 +1,6 @@
 package com.crm.Crm.service.impl;
 
+import com.crm.Crm.entity.Opportunity;
 import com.crm.Crm.repository.ContactRepository;
 import com.crm.Crm.repository.CrmBaseEntityRepository;
 import com.crm.Crm.Util.PaginationAndFilteringUtil;
@@ -65,6 +66,12 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
         return contactMapper.toDto(new Contact());
     }
 
+    @Override
+    public void deleteContact(Long id) {
+        Contact contact=contactRepository.findById(id).orElseThrow(()->new ResourceNotFoundException());
+        contact.getOpportunityList().forEach((opportunity -> opportunity.getContactList().remove(contact)));
+        contactRepository.deleteById(id);
+    }
 
 
     @Override
@@ -81,16 +88,16 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
 
     public FilteredPageWrapper<ContactDto> getContactFilteredPage(String searchWord, SearchFields searchFields, int page, int pageSize, String sortField, String sortDirection) {
         PageRequest pageRequest= PaginationAndFilteringUtil.getPaginationRequest(page,pageSize,sortField,sortDirection);
-        Page<CrmBaseEntity> resultPage = null;
+        Page<Contact> resultPage = null;
         if(!searchFields.getSearchFields().isEmpty() && !searchWord.isEmpty()) {
-            List<Specification<CrmBaseEntity>> contactSpecificationList = new ArrayList<>();
+            List<Specification<Contact>> contactSpecificationList = new ArrayList<>();
             for (String searchField : searchFields.getSearchFields()) {
                 contactSpecificationList.add(((root, criteriaQuery, criteriaBuilder) -> {
                     Root<Contact> contactRoot = criteriaQuery.from(Contact.class);
                     return criteriaBuilder.like(contactRoot.get(searchField), searchWord);
                 }));
-                Specification<CrmBaseEntity> contactSpecification = contactSpecificationList.stream().reduce(Specification::and).orElse(null);
-                resultPage = crmBaseEntityRepository.findAll(contactSpecification, pageRequest);
+                Specification<Contact> contactSpecification = contactSpecificationList.stream().reduce(Specification::and).orElse(null);
+                resultPage = contactRepository.findAll(contactSpecification, pageRequest);
 
             }
         }

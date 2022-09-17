@@ -12,7 +12,9 @@ public interface ContactService extends CrmBaseEntityService{
 
     ContactDto saveContact(ContactDto contactDto);
 
-    public ContactDto updateContactDetails(Long id,ContactDto contactDto);
+    ContactDto updateContactDetails(Long id,ContactDto contactDto);
+
+    void deleteContact(Long id);
 
     SearchConfiguration getSearchParams();
 

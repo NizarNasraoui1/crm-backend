@@ -8,6 +8,7 @@ import com.crm.Crm.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,6 +37,12 @@ public class ContactResource extends CrmBaseEntityResource {
             e.printStackTrace();
             return new ResponseEntity("update contact error!", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteContact(@PathVariable("id")Long id){
+        contactService.deleteContact(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

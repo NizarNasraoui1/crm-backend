@@ -75,7 +75,7 @@ public class CrmBaseEntityServiceImpl implements CrmBaseEntityService {
 
     @Override
     public List<NoteDto> getCrmBaseEntityNotes(Long id) {
-        return noteMapper.toDtos(noteRepository.findAllByCrmBaseEntityOrderByModifyDate(id));
+        return noteMapper.toDtos(noteRepository.findAllByCrmBaseEntityIdOrderByModifyDateDesc(id));
     }
 
 

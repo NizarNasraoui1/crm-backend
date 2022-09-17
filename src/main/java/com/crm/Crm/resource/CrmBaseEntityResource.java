@@ -19,24 +19,24 @@ public class CrmBaseEntityResource {
         return new ResponseEntity<>(crmBaseEntityService.getCrmBaseEntityById(id),HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-        try {
-            crmBaseEntityService.deleteCrmBaseEntityById(id);
-            return new ResponseEntity( HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity( HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+//        try {
+//            crmBaseEntityService.deleteCrmBaseEntityById(id);
+//            return new ResponseEntity( HttpStatus.OK);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new ResponseEntity( HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
-    @PostMapping("{id}/note")
+    @PostMapping("/{id}/note")
     public ResponseEntity<CrmBaseEntityDto>saveNoteToCrmBaseEntity(@PathVariable("id")Long id,@RequestBody NoteDto noteDto){
         return new ResponseEntity<>(crmBaseEntityService.addNoteToCrmBaseEntity(id,noteDto),HttpStatus.OK);
     }
 
-    @GetMapping("{id}/note")
-    public ResponseEntity<List<NoteDto>>getCrmBaseEntityNotes(@PathVariable("id")Long id, @RequestBody NoteDto noteDto){
+    @GetMapping("/{id}/note")
+    public ResponseEntity<List<NoteDto>>getCrmBaseEntityNotes(@PathVariable("id")Long id){
         return new ResponseEntity<>(crmBaseEntityService.getCrmBaseEntityNotes(id),HttpStatus.OK);
     }
 
