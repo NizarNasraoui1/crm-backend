@@ -37,8 +37,8 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public NoteDto updateNote(NoteDto noteDto) {
-        Note note=noteRepository.findById(noteDto.getId()).orElseThrow(()->new ResourceNotFoundException());
+    public NoteDto updateNote(Long id,NoteDto noteDto) {
+        Note note=noteRepository.findById(id).orElseThrow(()->new ResourceNotFoundException());
         note.setContent(noteDto.getContent());
         note.setTitle(noteDto.getTitle());
         return noteMapper.toDto(noteRepository.save(note));

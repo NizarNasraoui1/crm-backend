@@ -27,9 +27,9 @@ public class NoteResource {
         return new ResponseEntity<>(noteService.saveNote(id,noteDto),HttpStatus.OK);
     }
 
-    @PutMapping
-    public ResponseEntity<NoteDto>updateNote(@RequestBody NoteDto noteDto){
-        return new ResponseEntity<>(noteService.updateNote(noteDto),HttpStatus.OK);
+    @PutMapping("/{id}")
+    public ResponseEntity<NoteDto>updateNote(@PathVariable("id")Long id,@RequestBody NoteDto noteDto){
+        return new ResponseEntity<>(noteService.updateNote(id,noteDto),HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

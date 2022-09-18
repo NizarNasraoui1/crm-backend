@@ -8,7 +8,7 @@ public interface NoteService {
     public List<NoteDto> getNoteListByAccountId(Long id);
     public NoteDto saveNote(Long id,NoteDto noteDto);
 
-    public NoteDto updateNote(NoteDto noteDto);
+    public NoteDto updateNote(Long id,NoteDto noteDto);
 
     public void deleteNote(Long id);
 }
