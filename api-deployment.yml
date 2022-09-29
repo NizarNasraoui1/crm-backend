@@ -1,0 +1,21 @@
+apiVersion: apps/v1 # Kubernetes API version
+kind: Deployment  # Kubernetes resource kind we are creating
+metadata:
+  name: crm-deployment-k8s # name of the deployment
+spec:
+  selector:
+    matchLabels:
+      app: crm
+  replicas: 1 # Number of replicas that will be created for this deployment
+  template:
+    metadata:
+      labels:
+        app: crm
+    spec:
+      containers:
+      - name: crm
+        image: nizarnasraoui/crm-api:latest # Image that will be used to containers in the cluster
+        imagePullPolicy: Always
+
+        ports:
+        - containerPort: 8080 # The port that the container is running on in the cluster
