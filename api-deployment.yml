@@ -1,7 +1,7 @@
 apiVersion: apps/v1 # Kubernetes API version
 kind: Deployment  # Kubernetes resource kind we are creating
 metadata:
-  name: crm-deployment-k8s # name of the deployment
+  name: crm-deployment # name of the deployment
 spec:
   selector:
     matchLabels:
@@ -14,8 +14,17 @@ spec:
     spec:
       containers:
       - name: crm
-        image: nizarnasraoui/crm-api:latest # Image that will be used to containers in the cluster
-        imagePullPolicy: Always
+        image: nizarnasraoui/crm-api:1.0 # Image that will be used to containers in the cluster
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: MYSQL_HOST
+            value: mysql
+          - name: MYSQL_PORT
+            value: '3306'
+          - name: MYSQL_USER
+            value: 'root'
+          - name: MYSQL_PASSWORD
+            value: 'root'
 
         ports:
         - containerPort: 8080 # The port that the container is running on in the cluster

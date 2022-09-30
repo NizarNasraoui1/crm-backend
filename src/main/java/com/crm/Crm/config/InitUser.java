@@ -48,6 +48,7 @@ public class InitUser implements ApplicationListener<ContextRefreshedEvent> {
         userService.saveRole(new Role(null, "ADMIN"));;
         userService.saveUser(new User(null, "admin", "admin", "admin", new ArrayList<>()));
         userService.addRoleToUser("admin", "ADMIN");
+        alreadySetup=true;
     }
 
 

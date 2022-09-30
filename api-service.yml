@@ -4,7 +4,7 @@ metadata: # Metadata of the resource kind we are creating
   name: crm-api-service
 spec:
   selector:
-    app: crm-api-deployment
+    app: crm
   ports:
     - protocol: "TCP"
       port: 8080 # The port that the service is running on in the cluster
