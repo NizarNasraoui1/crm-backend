@@ -5,17 +5,26 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: crm
+      app: crm-deployment
   replicas: 1 # Number of replicas that will be created for this deployment
   template:
     metadata:
       labels:
-        app: crm
+        app: crm-deployment
     spec:
       containers:
-      - name: crm
+      - name: crm-deployment
         image: nizarnasraoui/crm-api:1.0 # Image that will be used to containers in the cluster
         imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080 # The port that the container is running on in the cluster
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"
         env:
           - name: MYSQL_HOST
             value: mysql
@@ -25,6 +34,3 @@ spec:
             value: 'root'
           - name: MYSQL_PASSWORD
             value: 'root'
-
-        ports:
-        - containerPort: 8080 # The port that the container is running on in the cluster
