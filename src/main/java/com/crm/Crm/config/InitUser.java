@@ -17,10 +17,7 @@ import java.util.ArrayList;
 @Component
 public class InitUser implements ApplicationListener<ContextRefreshedEvent> {
 
-    private boolean alreadySetup = false;
-
-    @Autowired
-    private UserRepository userRepository;
+    private static boolean alreadySetup = false;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -36,6 +33,7 @@ public class InitUser implements ApplicationListener<ContextRefreshedEvent> {
         }
         if(!existAdmin()){
             createAdminUser();
+            alreadySetup=true;
         }
 
     }
@@ -48,7 +46,6 @@ public class InitUser implements ApplicationListener<ContextRefreshedEvent> {
         userService.saveRole(new Role(null, "ADMIN"));;
         userService.saveUser(new User(null, "admin", "admin", "admin", new ArrayList<>()));
         userService.addRoleToUser("admin", "ADMIN");
-        alreadySetup=true;
     }
 
 
