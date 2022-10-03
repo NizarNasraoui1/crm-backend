@@ -8,11 +8,11 @@
 		<version>2.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.toubibnet</groupId>
-	<artifactId>toubibnet</artifactId>
+	<groupId>com.Crm</groupId>
+	<artifactId>Crm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>toubibnet</name>
-	<description>clone of med.tn</description>
+	<name>Crm</name>
+	<description>Crm software</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>

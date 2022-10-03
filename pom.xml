@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.CRM</groupId>
-	<artifactId>toubibnet</artifactId>
+	<artifactId>Crm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CRM</name>
 	<description>CRM app</description>

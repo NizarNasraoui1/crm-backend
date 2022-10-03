@@ -43,7 +43,7 @@ public class InitUser implements ApplicationListener<ContextRefreshedEvent> {
     }
 
     public void createAdminUser(){
-        userService.saveRole(new Role(null, "ADMIN"));;
+        userService.saveRole(new Role( "ADMIN"));;
         userService.saveUser(new User(null, "admin", "admin", "admin", new ArrayList<>()));
         userService.addRoleToUser("admin", "ADMIN");
     }

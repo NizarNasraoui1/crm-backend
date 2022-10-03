@@ -1,5 +1,6 @@
 package com.crm.Crm.service;
 
+import com.crm.Crm.entity.Authority;
 import com.crm.Crm.entity.Role;
 import com.crm.Crm.entity.User;
 
@@ -14,7 +15,9 @@ import java.util.List;
 public interface UserService {
     User saveUser(User user);
     Role saveRole(Role role);
+    Authority saveAuthority(Authority authority);
     void addRoleToUser(String username, String roleName);
     User getUser(String username);
+    Role addAuthorityToRole(String roleName, String authority);
     List<User>getUsers();
 }

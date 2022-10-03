@@ -1,5 +1,7 @@
 package com.crm.Crm.service.impl;
 
+import com.crm.Crm.entity.Authority;
+import com.crm.Crm.repository.AuthorityRepository;
 import com.crm.Crm.repository.RoleRepository;
 import com.crm.Crm.repository.UserRepository;
 import com.crm.Crm.entity.Role;
@@ -24,6 +26,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -37,7 +40,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             log.info("User found in the database: {}", username);
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
             user.getRoles().forEach(role -> {
-                authorities.add(new SimpleGrantedAuthority(role.getName()));
+                role.getAuthorities().forEach(authority -> authorities.add(new SimpleGrantedAuthority(authority.getName())));
             });
             return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
         }
@@ -57,6 +60,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public Authority saveAuthority(Authority authority) {
+        return authorityRepository.save(authority);
+    }
+
+    @Override
     public void addRoleToUser(String username, String roleName) {
         log.info("Adding role {} to user {}", roleName, username);
         User user = userRepository.findByUsername(username);
@@ -68,6 +76,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User getUser(String username) {
         log.info("Fetching user {}", username);
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public Role addAuthorityToRole(String roleName, String authorityName) {
+        Role role=this.roleRepository.findByName(roleName);
+        Authority authority=authorityRepository.findByName(authorityName);
+        role.getAuthorities().add(authority);
+        return roleRepository.save(role);
+
+
     }
 
     @Override

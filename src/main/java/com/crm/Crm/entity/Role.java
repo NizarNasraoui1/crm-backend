@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -20,4 +24,10 @@ public class Role {
     @GeneratedValue(strategy = AUTO)
     private Long id;
     private String name;
+    @ManyToMany
+    List<Authority> authorities=new ArrayList<>();
+
+    public Role(String name) {
+        this.name = name;
+    }
 }
