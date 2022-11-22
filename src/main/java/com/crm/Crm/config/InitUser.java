@@ -1,5 +1,6 @@
 package com.crm.Crm.config;
 
+import com.crm.Crm.entity.Authority;
 import com.crm.Crm.entity.Role;
 import com.crm.Crm.entity.User;
 import com.crm.Crm.repository.RoleRepository;
@@ -43,8 +44,10 @@ public class InitUser implements ApplicationListener<ContextRefreshedEvent> {
     }
 
     public void createAdminUser(){
-        userService.saveRole(new Role( "ADMIN"));;
+        userService.saveRole(new Role( "ADMIN"));
+        userService.saveAuthority(new Authority("ADMIN"));
         userService.saveUser(new User(null, "admin", "admin", "admin", new ArrayList<>()));
+        userService.addAuthorityToRole("ADMIN","ADMIN");
         userService.addRoleToUser("admin", "ADMIN");
     }
 

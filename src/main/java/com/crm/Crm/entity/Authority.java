@@ -19,4 +19,7 @@ public class Authority {
     @GeneratedValue(strategy = AUTO)
     Long id;
     String name;
+    public Authority(String name){
+        this.name=name;
+    }
 }
