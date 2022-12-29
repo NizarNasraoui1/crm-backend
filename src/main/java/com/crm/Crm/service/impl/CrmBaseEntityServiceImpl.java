@@ -70,7 +70,7 @@ public class CrmBaseEntityServiceImpl implements CrmBaseEntityService {
         CrmBaseEntity crmBaseEntity= crmBaseEntityRepository.findById(id).orElseThrow(()->new ResourceNotFoundException());
         crmBaseEntity.getNoteList().add(note);
         note.setCrmBaseEntity(crmBaseEntity);
-        return crmBaseEntityMapper.toDto(crmBaseEntityRepository.save(crmBaseEntityRepository.save(crmBaseEntity)));
+        return crmBaseEntityMapper.toDto(crmBaseEntityRepository.save(crmBaseEntity));
     }
 
     @Override
