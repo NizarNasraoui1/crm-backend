@@ -88,7 +88,9 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
 
     public FilteredPageWrapper<ContactDto> getContactFilteredPage(String searchWord, SearchFields searchFields, int page, int pageSize, String sortField, String sortDirection) {
         PageRequest pageRequest= PaginationAndFilteringUtil.getPaginationRequest(page,pageSize,sortField,sortDirection);
+        List<ContactDto>contactDtoList=new ArrayList<>();
         Page<Contact> resultPage = null;
+        int totalResults=0;
         if(!searchFields.getSearchFields().isEmpty() && !searchWord.isEmpty()) {
             List<Specification<Contact>> contactSpecificationList = new ArrayList<>();
             for (String searchField : searchFields.getSearchFields()) {
@@ -104,7 +106,11 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
         else{
             resultPage=contactRepository.findAll(pageRequest);
         }
-        List<ContactDto>contactDtoList=resultPage.getContent().stream().map(contact->contactMapper.toDto((Contact) contact)).collect(Collectors.toList());
-        return new FilteredPageWrapper<>(resultPage.getTotalPages()*pageSize,contactDtoList);
+        if(resultPage!=null){
+            contactDtoList=resultPage.getContent().stream().map(contact->contactMapper.toDto((Contact) contact)).collect(Collectors.toList());
+            totalResults=resultPage.getTotalPages()*pageSize;
+        }
+        return new FilteredPageWrapper<>(totalResults,contactDtoList);
+
     }
 }

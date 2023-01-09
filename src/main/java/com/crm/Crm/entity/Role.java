@@ -25,9 +25,10 @@ public class Role {
     private Long id;
     private String name;
     @ManyToMany
-    List<Authority> authorities=new ArrayList<>();
+    List<Authority> authorities;
 
     public Role(String name) {
         this.name = name;
+        this.authorities=new ArrayList<>();
     }
 }

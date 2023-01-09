@@ -3,6 +3,8 @@ package com.crm.Crm.config;
 import com.crm.Crm.entity.Authority;
 import com.crm.Crm.entity.Role;
 import com.crm.Crm.entity.User;
+import com.crm.Crm.exception.AuthorityAlreadyExists;
+import com.crm.Crm.exception.RoleAlreadyExistsException;
 import com.crm.Crm.repository.RoleRepository;
 import com.crm.Crm.repository.UserRepository;
 import com.crm.Crm.service.UserService;
@@ -33,8 +35,12 @@ public class InitUser implements ApplicationListener<ContextRefreshedEvent> {
             return;
         }
         if(!existAdmin()){
-            createAdminUser();
-            alreadySetup=true;
+            try {
+                createAdminUser();
+                alreadySetup=true;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
@@ -43,7 +49,7 @@ public class InitUser implements ApplicationListener<ContextRefreshedEvent> {
         return roleRepository.findByName("ADMIN")==null?false:true;
     }
 
-    public void createAdminUser(){
+public void createAdminUser() throws Exception {
         userService.saveRole(new Role( "ADMIN"));
         userService.saveAuthority(new Authority("ADMIN"));
         userService.saveUser(new User(null, "admin", "admin", "admin", new ArrayList<>()));

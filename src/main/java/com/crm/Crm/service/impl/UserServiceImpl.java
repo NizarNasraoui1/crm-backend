@@ -1,6 +1,8 @@
 package com.crm.Crm.service.impl;
 
 import com.crm.Crm.entity.Authority;
+import com.crm.Crm.exception.AuthorityAlreadyExists;
+import com.crm.Crm.exception.RoleAlreadyExistsException;
 import com.crm.Crm.repository.AuthorityRepository;
 import com.crm.Crm.repository.RoleRepository;
 import com.crm.Crm.repository.UserRepository;
@@ -47,21 +49,34 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User saveUser(User user) {
-        log.info("Saving new user {} to the database", user.getName());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+    public User saveUser(User user) throws Exception {
+        if(userRepository.findByUsername(user.getUsername())==null){
+            log.info("Saving new user {} to the database", user.getName());
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            return userRepository.save(user);
+        }
+        throw new Exception("user already exists!");
+
     }
 
     @Override
-    public Role saveRole(Role role) {
-        log.info("Saving new role {} to the database", role.getName());
-        return roleRepository.save(role);
+    public Role saveRole(Role role) throws RoleAlreadyExistsException {
+        if(roleRepository.findByName(role.getName())==null){
+            log.info("Saving new role {} to the database", role.getName());
+            return roleRepository.save(role);
+        }
+        throw new RoleAlreadyExistsException();
+
     }
 
     @Override
-    public Authority saveAuthority(Authority authority) {
-        return authorityRepository.save(authority);
+    public Authority saveAuthority(Authority authority) throws AuthorityAlreadyExists {
+        if(authorityRepository.findByName(authority.getName())!=null){
+            return authorityRepository.save(authority);
+        }
+        throw new AuthorityAlreadyExists();
+
+
     }
 
     @Override
