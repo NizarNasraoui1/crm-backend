@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.CRM</groupId>
 	<artifactId>Crm</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.1-RELEASE</version>
 	<name>CRM</name>
 	<description>CRM app</description>
 	<properties>
@@ -217,7 +217,7 @@
 			<url>http://localhost:8081/repository/maven-snapshots</url>
 		</snapshotRepository>
 		<repository>
-			<id>nexusdeployment</id>
+			<id>nexusdeploymentrepo</id>
 			<url>http://localhost:8081/repository/maven-releases</url>
 		</repository>
 	</distributionManagement>
