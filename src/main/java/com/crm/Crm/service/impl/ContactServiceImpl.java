@@ -95,13 +95,11 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
             List<Specification<Contact>> contactSpecificationList = new ArrayList<>();
             for (String searchField : searchFields.getSearchFields()) {
                 contactSpecificationList.add(((root, criteriaQuery, criteriaBuilder) -> {
-                    Root<Contact> contactRoot = criteriaQuery.from(Contact.class);
-                    return criteriaBuilder.like(contactRoot.get(searchField), searchWord);
+                    return criteriaBuilder.like(root.get(searchField), "%"+searchWord+"%");
                 }));
-                Specification<Contact> contactSpecification = contactSpecificationList.stream().reduce(Specification::and).orElse(null);
-                resultPage = contactRepository.findAll(contactSpecification, pageRequest);
-
             }
+            Specification<Contact> contactSpecification = contactSpecificationList.stream().reduce(Specification::and).orElse(null);
+            resultPage = contactRepository.findAll(contactSpecification, pageRequest);
         }
         else{
             resultPage=contactRepository.findAll(pageRequest);
