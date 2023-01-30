@@ -14,4 +14,8 @@ public interface ContactRepository extends JpaRepository<Contact, Long>, JpaSpec
     @Query("select c from Contact c where c.id in (:idList)")
     List<Contact> findAllById(@Param("idList") List<Long>idList);
 
+    List<Contact> findAllByIdIn(List<Long>idList);
+
+
+
 }

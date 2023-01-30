@@ -35,7 +35,7 @@ public class OpportunityServiceImpl implements OpportunityService {
     public OpportunityDto saveOpportunity(OpportunityDto opportunityDto) {
         Opportunity opportunity=opportunityMapper.toBo(opportunityDto);
         List<Long>contactIds=opportunity.getContactList().stream().map(Contact::getId).collect(Collectors.toList());
-        List<Contact>contactList=contactRepository.findAllById(contactIds);
+        List<Contact>contactList=contactRepository.findAllByIdIn(contactIds);
         for (Contact contact : contactList) {
             contact.getOpportunityList().add(opportunity);
         }
