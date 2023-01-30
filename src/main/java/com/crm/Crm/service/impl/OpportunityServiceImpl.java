@@ -2,6 +2,7 @@ package com.crm.Crm.service.impl;
 
 import com.crm.Crm.dto.ContactDto;
 import com.crm.Crm.dto.OpportunityDto;
+import com.crm.Crm.entity.Contact;
 import com.crm.Crm.entity.Opportunity;
 import com.crm.Crm.enumeration.OpportunityStageEnum;
 import com.crm.Crm.mapper.ContactMapper;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OpportunityServiceImpl implements OpportunityService {
@@ -31,7 +33,14 @@ public class OpportunityServiceImpl implements OpportunityService {
 
     @Override
     public OpportunityDto saveOpportunity(OpportunityDto opportunityDto) {
-        return opportunityMapper.toDto(opportunityRepository.save(opportunityMapper.toBo(opportunityDto)));
+        Opportunity opportunity=opportunityMapper.toBo(opportunityDto);
+        List<Long>contactIds=opportunity.getContactList().stream().map(Contact::getId).collect(Collectors.toList());
+        List<Contact>contactList=contactRepository.findAllById(contactIds);
+        for (Contact contact : contactList) {
+            contact.getOpportunityList().add(opportunity);
+        }
+        contactRepository.saveAll(contactList);
+        return opportunityMapper.toDto(opportunityRepository.save(opportunity));
     }
 
     @Override

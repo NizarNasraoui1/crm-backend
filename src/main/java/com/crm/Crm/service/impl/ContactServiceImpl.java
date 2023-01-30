@@ -94,10 +94,9 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
         if(!searchFields.getSearchFields().isEmpty() && !searchWord.isEmpty()) {
             List<Specification<Contact>> contactSpecificationList = new ArrayList<>();
             for (String searchField : searchFields.getSearchFields()) {
-                contactSpecificationList.add(((root, criteriaQuery, criteriaBuilder) -> {
-                    return criteriaBuilder.like(root.get(searchField), "%"+searchWord+"%");
-                }));
-            }
+                contactSpecificationList.add((root, criteriaQuery, criteriaBuilder) ->
+                    criteriaBuilder.like(root.get(searchField), "%"+searchWord+"%"));
+            };
             Specification<Contact> contactSpecification = contactSpecificationList.stream().reduce(Specification::and).orElse(null);
             resultPage = contactRepository.findAll(contactSpecification, pageRequest);
         }
