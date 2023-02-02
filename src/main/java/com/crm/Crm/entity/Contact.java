@@ -18,8 +18,8 @@ public class Contact extends CrmBaseEntity {
     private String address;
     private String email;
 
-    @ManyToMany(mappedBy = "contactList")
-    List<Opportunity> opportunityList=new ArrayList<>();
+    @ManyToMany(mappedBy = "contacts")
+    List<Opportunity> opportunities=new ArrayList<>();
 
 
 }

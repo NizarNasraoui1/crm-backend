@@ -9,6 +9,8 @@ import java.util.List;
 public interface OpportunityService {
     OpportunityDto saveOpportunity(OpportunityDto opportunityDto);
 
+    List<OpportunityDto>getAllOpportunities();
+
     List<OpportunityDto> getAllOpportunitiesByStage(OpportunityStageEnum stage);
 
     List<ContactDto> getOpportunityContacts(Long id);

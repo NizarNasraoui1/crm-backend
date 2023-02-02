@@ -69,7 +69,7 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
     @Override
     public void deleteContact(Long id) {
         Contact contact=contactRepository.findById(id).orElseThrow(()->new ResourceNotFoundException());
-        contact.getOpportunityList().forEach((opportunity -> opportunity.getContactList().remove(contact)));
+        contact.getOpportunities().forEach((opportunity -> opportunity.getContacts().remove(contact)));
         contactRepository.deleteById(id);
     }
 

@@ -34,13 +34,18 @@ public class OpportunityServiceImpl implements OpportunityService {
     @Override
     public OpportunityDto saveOpportunity(OpportunityDto opportunityDto) {
         Opportunity opportunity=opportunityMapper.toBo(opportunityDto);
-        List<Long>contactIds=opportunity.getContactList().stream().map(Contact::getId).collect(Collectors.toList());
+        List<Long>contactIds=opportunity.getContacts().stream().map(Contact::getId).collect(Collectors.toList());
         List<Contact>contactList=contactRepository.findAllByIdIn(contactIds);
         for (Contact contact : contactList) {
-            contact.getOpportunityList().add(opportunity);
+            contact.getOpportunities().add(opportunity);
         }
         contactRepository.saveAll(contactList);
         return opportunityMapper.toDto(opportunityRepository.save(opportunity));
+    }
+
+    @Override
+    public List<OpportunityDto> getAllOpportunities() {
+        return opportunityMapper.toDtos(opportunityRepository.findAll());
     }
 
     @Override
@@ -51,6 +56,6 @@ public class OpportunityServiceImpl implements OpportunityService {
     @Override
     public List<ContactDto> getOpportunityContacts(Long id) {
         Opportunity opportunity= (Opportunity) opportunityRepository.findById(id).orElseThrow(()->new EntityNotFoundException());
-        return contactMapper.toDtos(opportunity.getContactList());
+        return contactMapper.toDtos(opportunity.getContacts());
     }
 }

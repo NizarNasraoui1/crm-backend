@@ -25,12 +25,15 @@ public class OpportunityResource extends CrmBaseEntityResource {
 
     @PostMapping
     public ResponseEntity<OpportunityDto> saveOpportunity(@RequestBody OpportunityDto opportunityDto){
-        Opportunity opportunity=opportunityMapper.toBo(opportunityDto);
-        //opportunity.setContactList();
         return new ResponseEntity<>(opportunityService.saveOpportunity(opportunityDto), HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/all")
+    public ResponseEntity<List<OpportunityDto>> getAllOpportunities(){
+        return new ResponseEntity<>(opportunityService.getAllOpportunities(),HttpStatus.OK);
+    }
+
+    @GetMapping("/stage")
     public ResponseEntity<List<OpportunityDto>> getAllOpportunitiesByStage(@RequestParam(value = "stage",required = true) OpportunityStageEnum stage){
         return new ResponseEntity<>(opportunityService.getAllOpportunitiesByStage(stage),HttpStatus.OK);
     }

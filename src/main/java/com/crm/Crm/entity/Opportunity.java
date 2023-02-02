@@ -22,10 +22,10 @@ public class Opportunity extends CrmBaseEntity{
     @JoinTable(name="opportunity_contact",joinColumns = @JoinColumn(name = "opportunity_id",referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(name="contact_id",referencedColumnName = "id"))
     @JsonIgnore
-    List<Contact> contactList;
+    List<Contact> contacts;
 
     public Opportunity() {
-        this.contactList=new ArrayList<>();
+        this.contacts=new ArrayList<>();
     }
 
 

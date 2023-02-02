@@ -1,7 +1,6 @@
 package com.crm.Crm.dto;
 
 import com.crm.Crm.enumeration.OpportunityStageEnum;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,13 +15,13 @@ public class OpportunityDto extends CrmBaseEntityDto{
     private String name;
     private OpportunityStageEnum stage;
     private LocalDateTime closeDate;
-    private List<ContactDto> contactList=new ArrayList<>();
+    private List<ContactDto> contacts =new ArrayList<>();
 
-    public OpportunityDto(Long id, Date createDate, Date modifyDate, List<NoteDto> noteList, String name, OpportunityStageEnum stage, LocalDateTime closeDate, List<ContactDto> contactList) {
+    public OpportunityDto(Long id, Date createDate, Date modifyDate, List<NoteDto> noteList, String name, OpportunityStageEnum stage, LocalDateTime closeDate, List<ContactDto> contacts) {
         super(id, createDate, modifyDate, noteList);
         this.name = name;
         this.stage = stage;
         this.closeDate = closeDate;
-        this.contactList = contactList;
+        this.contacts = contacts;
     }
 }
