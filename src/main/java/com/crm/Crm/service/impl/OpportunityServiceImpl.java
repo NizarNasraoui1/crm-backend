@@ -9,6 +9,7 @@ import com.crm.Crm.mapper.ContactMapper;
 import com.crm.Crm.mapper.OpportunityMapper;
 import com.crm.Crm.repository.ContactRepository;
 import com.crm.Crm.repository.OpportunityRepository;
+import com.crm.Crm.service.ContactService;
 import com.crm.Crm.service.OpportunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,9 @@ public class OpportunityServiceImpl implements OpportunityService {
 
     @Autowired
     ContactMapper contactMapper;
+
+    @Autowired
+    ContactService contactService;
 
     @Override
     public OpportunityDto saveOpportunity(OpportunityDto opportunityDto) {
@@ -57,5 +61,21 @@ public class OpportunityServiceImpl implements OpportunityService {
     public List<ContactDto> getOpportunityContacts(Long id) {
         Opportunity opportunity= (Opportunity) opportunityRepository.findById(id).orElseThrow(()->new EntityNotFoundException());
         return contactMapper.toDtos(opportunity.getContacts());
+    }
+
+    @Override
+    public void deleteOpportunity(Long id) {
+        opportunityRepository.delete(opportunityRepository.findById(id).orElseThrow(()->new EntityNotFoundException("opportunity not found")));
+
+    }
+
+    @Override
+    public OpportunityDto updateOpportunity(Long id,OpportunityDto opportunityDto) {
+        Opportunity opportunity=opportunityRepository.findById(id).orElseThrow(()->new EntityNotFoundException("opportunity not found"));
+        opportunity.setName(opportunityDto.getName());
+        opportunity.setStage(opportunityDto.getStage());
+        List<Contact>contacts=opportunityDto.getContacts().stream().map((contact)->contactMapper.toBo(contact)).map((contact)->contactRepository.save(contact)).collect(Collectors.toList());
+        opportunity.setContacts(contacts);
+        return opportunityMapper.toDto(opportunityRepository.save(opportunity));
     }
 }

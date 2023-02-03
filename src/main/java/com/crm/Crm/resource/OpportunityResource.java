@@ -23,11 +23,6 @@ public class OpportunityResource extends CrmBaseEntityResource {
     @Autowired
     OpportunityMapper opportunityMapper;
 
-    @PostMapping
-    public ResponseEntity<OpportunityDto> saveOpportunity(@RequestBody OpportunityDto opportunityDto){
-        return new ResponseEntity<>(opportunityService.saveOpportunity(opportunityDto), HttpStatus.OK);
-    }
-
     @GetMapping("/all")
     public ResponseEntity<List<OpportunityDto>> getAllOpportunities(){
         return new ResponseEntity<>(opportunityService.getAllOpportunities(),HttpStatus.OK);
@@ -42,4 +37,24 @@ public class OpportunityResource extends CrmBaseEntityResource {
     public ResponseEntity<List<ContactDto>> getOpportunityContacts(@PathVariable("id")Long id){
         return new ResponseEntity<>(opportunityService.getOpportunityContacts(id),HttpStatus.OK);
     }
+
+    @PostMapping
+    public ResponseEntity<OpportunityDto> saveOpportunity(@RequestBody OpportunityDto opportunityDto){
+        return new ResponseEntity<>(opportunityService.saveOpportunity(opportunityDto), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<OpportunityDto>updateOpportunity(@PathVariable("id")Long id,@RequestBody OpportunityDto opportunityDto){
+        return ResponseEntity.ok(opportunityService.updateOpportunity(id,opportunityDto));
+    }
+
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?>deleteOpportunity(@PathVariable("id")Long id){
+            opportunityService.deleteOpportunity(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }
