@@ -17,7 +17,10 @@ public class ContactResource extends CrmBaseEntityResource {
     @Autowired
     ContactService contactService;
 
-
+    @GetMapping("/{id}/has-opportunity")
+    public ResponseEntity<Boolean>hasOpportunity(@PathVariable("id")Long id){
+        return ResponseEntity.ok(contactService.hasOpportunity(id));
+    }
 
     @PostMapping
     public ResponseEntity<ContactDto> save(@RequestBody ContactDto entityDto) {

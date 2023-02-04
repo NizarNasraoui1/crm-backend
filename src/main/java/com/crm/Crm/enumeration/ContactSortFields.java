@@ -5,11 +5,19 @@ public enum ContactSortFields {
     FIRST_NAME("firstName","First Name"),
     LAST_NAME("lastName","LastName");
 
-    public final String label;
-    public final String name;
+    private String label;
+    private String name;
 
     ContactSortFields(String name,String label) {
         this.label = label;
         this.name= name;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public String getName() {
+        return name;
     }
 }

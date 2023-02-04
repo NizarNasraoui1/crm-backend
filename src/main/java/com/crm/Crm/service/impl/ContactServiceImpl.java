@@ -24,6 +24,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,6 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@Transactional
 public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements ContactService {
 
     @Autowired
@@ -67,6 +67,7 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
     }
 
     @Override
+    @Transactional
     public void deleteContact(Long id) {
         Contact contact=contactRepository.findById(id).orElseThrow(()->new ResourceNotFoundException());
         contact.getOpportunities().forEach((opportunity -> opportunity.getContacts().remove(contact)));
@@ -78,10 +79,10 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
     public SearchConfiguration getSearchParams() {
         SearchConfiguration searchConfiguration=new SearchConfiguration();
         for(ContactSortFields sortField: ContactSortFields.values()){
-            searchConfiguration.getSortFields().add(new ParamDto(sortField.name,sortField.label));
+            searchConfiguration.getSortFields().add(new ParamDto(sortField.getName(),sortField.getLabel()));
         }
         for(ContactSearchFields searchField: ContactSearchFields.values()){
-            searchConfiguration.getSearchFields().add(new ParamDto(searchField.name,searchField.label));
+            searchConfiguration.getSearchFields().add(new ParamDto(searchField.getName(),searchField.getLabel()));
         }
         return searchConfiguration;
     }
@@ -109,5 +110,12 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
         }
         return new FilteredPageWrapper<>(totalResults,contactDtoList);
 
+    }
+
+    @Override
+    public Boolean hasOpportunity(Long id) {
+        Contact contact=contactRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("contact not found"));
+        if(contact.getOpportunities().size()!=0) return true;
+        return false;
     }
 }
