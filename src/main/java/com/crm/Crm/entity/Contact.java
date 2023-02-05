@@ -1,6 +1,7 @@
 package com.crm.Crm.entity;
 
 import com.crm.Crm.dto.ContactDto;
+import com.crm.Crm.dto.CrmBaseEntityDto;
 import com.crm.Crm.mapper.ContactMapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -21,16 +22,13 @@ public class Contact extends CrmBaseEntity {
     private String address;
     private String email;
 
-    @Autowired
-    @Transient
-    ContactMapper contactMapper;
+
 
     @ManyToMany(mappedBy = "contacts")
     List<Opportunity> opportunities=new ArrayList<>();
 
-    public ContactDto toDto(Contact contact){
-        return contactMapper.toDto(contact);
-    }
+
+
 
 
 }

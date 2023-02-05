@@ -2,6 +2,7 @@ package com.crm.Crm.resource;
 
 import com.crm.Crm.service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,13 @@ public class FileUploadResource {
     public ResponseEntity<?>uploadFile(@RequestParam("file") MultipartFile file, @PathVariable Long id){
             fileUploadService.uploadFile(file,id);
             return ResponseEntity.ok("file uploaded successfully");
-
     }
+
+    @DeleteMapping("/{fileName}")
+    public ResponseEntity<?>deleteFile(@PathVariable("fileName")String fileName) throws IOException {
+        fileUploadService.deleteFile(fileName);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }

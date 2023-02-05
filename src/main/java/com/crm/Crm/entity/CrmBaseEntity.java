@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 @Entity @Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class CrmBaseEntity {
+public class  CrmBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
@@ -31,12 +31,7 @@ public class CrmBaseEntity {
     @OneToMany(mappedBy = "crmBaseEntity",cascade = CascadeType.ALL)
     private List<Note>noteList;
 
-    @Autowired
-    @Transient
-    CrmBaseEntityMapper crmBaseEntityMapper;
-    public CrmBaseEntityDto toDto(CrmBaseEntity crmBaseEntity){
-        return crmBaseEntityMapper.toDto(crmBaseEntity);
-    }
+
 
 
 

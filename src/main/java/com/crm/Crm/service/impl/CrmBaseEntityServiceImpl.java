@@ -42,8 +42,11 @@ public class CrmBaseEntityServiceImpl implements CrmBaseEntityService {
 
     @Override
     public CrmBaseEntityDto getCrmBaseEntityById(Long id) {
-        CrmBaseEntity crmBaseEntity= crmBaseEntityRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("entity not found"));
-        return crmBaseEntity.toDto(crmBaseEntity);
+        CrmBaseEntity crmBaseEntity= crmBaseEntityRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("contact not found"));
+        if (crmBaseEntity instanceof Contact){
+            return contactMapper.toDto((Contact) crmBaseEntity);
+        }
+        return crmBaseEntityMapper.toDto(crmBaseEntity);
     }
 
     @Override

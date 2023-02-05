@@ -11,11 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 @Service
 public class FileUploadServiceImpl implements FileUploadService {
@@ -48,7 +50,21 @@ public class FileUploadServiceImpl implements FileUploadService {
             }
         }
 
-        public static void checkFileType(MultipartFile file) throws Exception{
+    @Override
+    @Transactional
+    public void deleteFile(String fileName) throws IOException {
+            Path file = root.resolve(fileName);
+            if(!Files.deleteIfExists(file)){
+                throw new IOException("file does not exist");
+            }
+            Optional<File> fileEntity=fileRepository.findFileByPath(fileName);
+            if(fileEntity.isPresent()){
+                fileRepository.delete(fileEntity.get());
+
+            }
+    }
+
+    public static void checkFileType(MultipartFile file) throws Exception{
             String[]splittedFileName=file.getOriginalFilename().split("\\.");
             if(splittedFileName.length!=2) throw new Exception("unsupported file extension");
             String fileType=splittedFileName[1];
@@ -62,14 +78,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 
         }
 
-        public boolean delete(String filename) {
-            try {
-                Path file = root.resolve(filename);
-                return Files.deleteIfExists(file);
-            } catch (IOException e) {
-                throw new RuntimeException("Error: " + e.getMessage());
-            }
-        }
+
         public java.net.URI load(String filename) {
             Path file = root.resolve(filename);
             return file.toUri();

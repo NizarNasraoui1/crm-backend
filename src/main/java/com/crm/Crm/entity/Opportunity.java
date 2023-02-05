@@ -1,8 +1,13 @@
 package com.crm.Crm.entity;
 
+import com.crm.Crm.dto.ContactDto;
+import com.crm.Crm.dto.OpportunityDto;
 import com.crm.Crm.enumeration.OpportunityStageEnum;
+import com.crm.Crm.mapper.ContactMapper;
+import com.crm.Crm.mapper.OpportunityMapper;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,6 +32,8 @@ public class Opportunity extends CrmBaseEntity{
     public Opportunity() {
         this.contacts=new ArrayList<>();
     }
+
+
 
 
     //    public Opportunity(Long id, Date createDate, Date modifyDate, List<Note> noteList, String name, OpportunityStageEnum stage, LocalDateTime closeDate) {
