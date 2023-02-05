@@ -16,6 +16,9 @@ public interface ContactRepository extends JpaRepository<Contact, Long>, JpaSpec
 
     List<Contact> findAllByIdIn(List<Long>idList);
 
+    @Query("select count(*) from Contact")
+    int countContacts();
+
 
 
 }
