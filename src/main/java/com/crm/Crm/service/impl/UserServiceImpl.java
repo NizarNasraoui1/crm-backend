@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Authority saveAuthority(Authority authority) throws AuthorityAlreadyExists {
-        if(authorityRepository.findByName(authority.getName())!=null){
+        if(authorityRepository.findByName(authority.getName())==null){
             return authorityRepository.save(authority);
         }
         throw new AuthorityAlreadyExists();

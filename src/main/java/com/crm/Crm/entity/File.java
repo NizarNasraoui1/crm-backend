@@ -13,6 +13,6 @@ public class File {
     private Long id;
     String path;
     @ManyToOne
-    @JoinColumn(name="file_id",referencedColumnName = "id")
+    @JoinColumn(name="crm_base_entity_id",referencedColumnName = "id")
     CrmBaseEntity crmBaseEntity;
 }

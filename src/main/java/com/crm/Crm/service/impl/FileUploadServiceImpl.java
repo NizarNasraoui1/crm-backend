@@ -17,6 +17,8 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,6 +64,11 @@ public class FileUploadServiceImpl implements FileUploadService {
                 fileRepository.delete(fileEntity.get());
 
             }
+    }
+
+    @Override
+    public List<String> getCrmBaseEntityFileNames(Long id) {
+        return new ArrayList<>();
     }
 
     public static void checkFileType(MultipartFile file) throws Exception{

@@ -1,5 +1,6 @@
 package com.crm.Crm.resource;
 
+import com.crm.Crm.entity.File;
 import com.crm.Crm.service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.springframework.core.io.Resource;
@@ -24,6 +26,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileUploadResource {
     @Autowired
     FileUploadService fileUploadService;
+
+    @GetMapping("all/{crmBaseEntity}")
+    public ResponseEntity<List<String>>getFilesForCrmBaseEntity(@PathVariable("crmBaseEntity")Long id){
+        return new ResponseEntity<>(fileUploadService.getCrmBaseEntityFileNames(id),HttpStatus.OK);
+    }
+
     @PostMapping("/upload/crm-base-entity/{id}")
     public ResponseEntity<?>uploadFile(@RequestParam("file") MultipartFile file, @PathVariable Long id){
             fileUploadService.uploadFile(file,id);
