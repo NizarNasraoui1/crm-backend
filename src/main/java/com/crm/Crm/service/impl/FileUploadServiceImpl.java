@@ -2,6 +2,7 @@ package com.crm.Crm.service.impl;
 
 import com.crm.Crm.entity.CrmBaseEntity;
 import com.crm.Crm.entity.File;
+import com.crm.Crm.enumeration.AllowedFileTypes;
 import com.crm.Crm.repository.CrmBaseEntityRepository;
 import com.crm.Crm.repository.FileRepository;
 import com.crm.Crm.service.FileUploadService;
@@ -28,9 +29,23 @@ public class FileUploadServiceImpl implements FileUploadService {
         fileRepository.save(new File(null,file.getOriginalFilename().toString(),crmBaseEntity));
 
     }
+    public static void checkFileType(MultipartFile file) throws Exception{
+        String[]splittedFileName=file.getOriginalFilename().split("\\.");
+        if(splittedFileName.length!=2) throw new Exception("unsupported file extension");
+        String fileType=splittedFileName[1];
+        boolean isAllowedType=false;
+        for(AllowedFileTypes allowedFileType:AllowedFileTypes.values()){
+            if(fileType.equalsIgnoreCase(allowedFileType.toString())){
+                isAllowedType=true;
+            }
+        }
+        if(!isAllowedType) throw new Exception("not allowed type");
+
+    }
     @Override
         public void uploadFile(MultipartFile file,Long crmBaseEntityId) {
             try {
+                checkFileType(file);
                 Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
                 this.saveFile(file,crmBaseEntityId);
 
