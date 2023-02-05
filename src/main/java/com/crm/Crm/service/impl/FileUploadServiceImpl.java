@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,19 +30,8 @@ public class FileUploadServiceImpl implements FileUploadService {
         fileRepository.save(new File(null,file.getOriginalFilename().toString(),crmBaseEntity));
 
     }
-    public static void checkFileType(MultipartFile file) throws Exception{
-        String[]splittedFileName=file.getOriginalFilename().split("\\.");
-        if(splittedFileName.length!=2) throw new Exception("unsupported file extension");
-        String fileType=splittedFileName[1];
-        boolean isAllowedType=false;
-        for(AllowedFileTypes allowedFileType:AllowedFileTypes.values()){
-            if(fileType.equalsIgnoreCase(allowedFileType.toString())){
-                isAllowedType=true;
-            }
-        }
-        if(!isAllowedType) throw new Exception("not allowed type");
 
-    }
+
     @Override
         public void uploadFile(MultipartFile file,Long crmBaseEntityId) {
             try {
@@ -56,6 +46,33 @@ public class FileUploadServiceImpl implements FileUploadService {
 
                 throw new RuntimeException(e.getMessage());
             }
+        }
+
+        public static void checkFileType(MultipartFile file) throws Exception{
+            String[]splittedFileName=file.getOriginalFilename().split("\\.");
+            if(splittedFileName.length!=2) throw new Exception("unsupported file extension");
+            String fileType=splittedFileName[1];
+            boolean isAllowedType=false;
+            for(AllowedFileTypes allowedFileType:AllowedFileTypes.values()){
+                if(fileType.equalsIgnoreCase(allowedFileType.toString())){
+                    isAllowedType=true;
+                }
+            }
+            if(!isAllowedType) throw new Exception("not allowed type");
+
+        }
+
+        public boolean delete(String filename) {
+            try {
+                Path file = root.resolve(filename);
+                return Files.deleteIfExists(file);
+            } catch (IOException e) {
+                throw new RuntimeException("Error: " + e.getMessage());
+            }
+        }
+        public java.net.URI load(String filename) {
+            Path file = root.resolve(filename);
+            return file.toUri();
         }
 
 }

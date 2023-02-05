@@ -1,5 +1,5 @@
 package com.crm.Crm.enumeration;
 
 public enum AllowedFileTypes {
-    JPEG,PNG
+    JPEG,PNG,PDF,DOCX
 }
