@@ -22,8 +22,8 @@ public class CrmBaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifyDate;
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    private List<File> fileList;
+    @OneToMany(mappedBy = "crmBaseEntity",cascade = CascadeType.ALL)
+    private List<File> fileList;
     @OneToMany(mappedBy = "crmBaseEntity",cascade = CascadeType.ALL)
     private List<Note>noteList;
 

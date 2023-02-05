@@ -1,21 +1,18 @@
 package com.crm.Crm.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-//@Entity
-//@Data
-//@NoArgsConstructor
-//@AllArgsConstructor
-public class File{
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-//    String path;
+@Entity
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
+public class File {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    String path;
+    @ManyToOne
+    @JoinColumn(name="file_id",referencedColumnName = "id")
+    CrmBaseEntity crmBaseEntity;
 }
