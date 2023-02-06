@@ -21,19 +21,19 @@ import java.util.stream.Collectors;
 @Service
 public class OpportunityServiceImpl implements OpportunityService {
     @Autowired
-    OpportunityRepository opportunityRepository;
+    private OpportunityRepository opportunityRepository;
 
     @Autowired
-    ContactRepository contactRepository;
+    private ContactRepository contactRepository;
 
     @Autowired
-    OpportunityMapper opportunityMapper;
+    private OpportunityMapper opportunityMapper;
 
     @Autowired
-    ContactMapper contactMapper;
+    private ContactMapper contactMapper;
 
     @Autowired
-    ContactService contactService;
+    private ContactService contactService;
 
     @Override
     public OpportunityDto saveOpportunity(OpportunityDto opportunityDto) {

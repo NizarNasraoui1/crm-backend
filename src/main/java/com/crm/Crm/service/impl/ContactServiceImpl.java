@@ -1,6 +1,7 @@
 package com.crm.Crm.service.impl;
 
 import com.crm.Crm.entity.Opportunity;
+import com.crm.Crm.event.CrmBaseEntityCreatedEvent;
 import com.crm.Crm.repository.ContactRepository;
 import com.crm.Crm.repository.CrmBaseEntityRepository;
 import com.crm.Crm.Util.PaginationAndFilteringUtil;
@@ -17,6 +18,8 @@ import com.crm.Crm.mapper.CrmBaseEntityMapper;
 import com.crm.Crm.service.ContactService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -35,15 +38,15 @@ import java.util.stream.Collectors;
 public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements ContactService {
 
     @Autowired
-    ContactRepository contactRepository;
+    private ContactRepository contactRepository;
 
     @Autowired
-    CrmBaseEntityRepository crmBaseEntityRepository;
+    private CrmBaseEntityRepository crmBaseEntityRepository;
     @Autowired
-    ContactMapper contactMapper;
+    private ContactMapper contactMapper;
 
     @Autowired
-    CrmBaseEntityMapper crmBaseEntityMapper;
+    private ApplicationEventPublisher applicationEventPublisher;
 
 
     @Override
@@ -53,7 +56,9 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
 
     @Override
     public ContactDto saveContact(ContactDto contactDto) {
-        return contactMapper.toDto(contactRepository.save(contactMapper.toBo(contactDto)));
+        Contact newContact= contactRepository.save(contactMapper.toBo(contactDto));
+        applicationEventPublisher.publishEvent(new CrmBaseEntityCreatedEvent(newContact));
+        return contactMapper.toDto(newContact);
     }
 
     @Override

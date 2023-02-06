@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
-    ContactRepository contactRepository;
+    private ContactRepository contactRepository;
     @Autowired
-    FileRepository fileRepository;
+    private FileRepository fileRepository;
     @Autowired
-    NoteRepository noteRepository;
+    private NoteRepository noteRepository;
     @Autowired
-    OpportunityRepository opportunityRepository;
+    private OpportunityRepository opportunityRepository;
     @Override
     public StatisticsDto getStatistics() {
         int contactsCount= contactRepository.countContacts();
