@@ -27,8 +27,8 @@ public class FileUploadResource {
     @Autowired
     FileUploadService fileUploadService;
 
-    @GetMapping("all/{crmBaseEntity}")
-    public ResponseEntity<List<String>>getFilesForCrmBaseEntity(@PathVariable("crmBaseEntity")Long id){
+    @GetMapping("all/crm-base-entity/{crmBaseEntityId}")
+    public ResponseEntity<List<String>>getFilesForCrmBaseEntity(@PathVariable("crmBaseEntityId")Long id){
         return new ResponseEntity<>(fileUploadService.getCrmBaseEntityFileNames(id),HttpStatus.OK);
     }
 
