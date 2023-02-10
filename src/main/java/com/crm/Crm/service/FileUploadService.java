@@ -1,9 +1,9 @@
 package com.crm.Crm.service;
 
-import com.crm.Crm.entity.File;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.List;
 
 public interface FileUploadService{
@@ -11,4 +11,6 @@ public interface FileUploadService{
     void deleteFile(String fileName) throws IOException;
 
     List<String>getCrmBaseEntityFileNames(Long id);
+
+    java.net.URI getAbsolutePath(String filename);
 }

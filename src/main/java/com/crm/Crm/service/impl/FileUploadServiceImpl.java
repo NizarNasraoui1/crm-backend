@@ -6,7 +6,9 @@ import com.crm.Crm.enumeration.AllowedFileTypes;
 import com.crm.Crm.repository.CrmBaseEntityRepository;
 import com.crm.Crm.repository.FileRepository;
 import com.crm.Crm.service.FileUploadService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,14 +23,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class FileUploadServiceImpl implements FileUploadService {
     @Autowired
     private FileRepository fileRepository;
     @Autowired
     private CrmBaseEntityRepository crmBaseEntityRepository;
-    private final Path root = Paths.get("src/main/resources/uploaded-files");
+    @Value("${file-upload-path}")
+    private String root;
 
-    public void saveFile(MultipartFile file,Long crmBaseEntityId){
+    public void saveFilePathInDatabase(MultipartFile file,Long crmBaseEntityId){
         CrmBaseEntity crmBaseEntity=crmBaseEntityRepository.findById(crmBaseEntityId).orElseThrow(()->new EntityNotFoundException());
         fileRepository.save(new File(null,file.getOriginalFilename().toString(),crmBaseEntity));
 
@@ -36,25 +40,25 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 
     @Override
-        public void uploadFile(MultipartFile file,Long crmBaseEntityId) {
-            try {
-                checkFileType(file);
-                Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
-                this.saveFile(file,crmBaseEntityId);
+    public void uploadFile(MultipartFile file,Long crmBaseEntityId) {
+        try {
+            checkFileType(file);
+            Files.copy(file.getInputStream(), Paths.get(this.root).resolve(file.getOriginalFilename()));
+            this.saveFilePathInDatabase(file,crmBaseEntityId);
 
-            } catch (Exception e) {
-                if (e instanceof FileAlreadyExistsException) {
-                    throw new RuntimeException("A file of that name already exists.");
-                }
+        } catch (FileAlreadyExistsException e) {
+                log.warn("this file already exists");
 
-                throw new RuntimeException(e.getMessage());
-            }
         }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
     @Override
     @Transactional
     public void deleteFile(String fileName) throws IOException {
-            Path file = root.resolve(fileName);
+            Path file = Paths.get(this.root).resolve(fileName);
             if(!Files.deleteIfExists(file)){
                 throw new IOException("file does not exist");
             }
@@ -62,6 +66,9 @@ public class FileUploadServiceImpl implements FileUploadService {
             if(fileEntity.isPresent()){
                 fileRepository.delete(fileEntity.get());
 
+            }
+            else{
+                throw new EntityNotFoundException("file does not exist");
             }
     }
 
@@ -85,8 +92,8 @@ public class FileUploadServiceImpl implements FileUploadService {
         }
 
 
-        public java.net.URI load(String filename) {
-            Path file = root.resolve(filename);
+        public java.net.URI getAbsolutePath(String filename) {
+            Path file = Paths.get(this.root).resolve(filename);
             return file.toUri();
         }
 

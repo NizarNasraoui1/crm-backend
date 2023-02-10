@@ -12,6 +12,6 @@ public interface FileRepository extends JpaRepository<File,Long> {
     @Query("select count(*) from File")
     int countFiles();
 
-    @Query("SELECT path FROM File f WHERE crm_base_entity_id=1")
+    @Query("SELECT path FROM File f WHERE crm_base_entity_id=:crmBaseEntityId")
     List<String> findAllByCrmBaseEntity(Long crmBaseEntityId);
 }
