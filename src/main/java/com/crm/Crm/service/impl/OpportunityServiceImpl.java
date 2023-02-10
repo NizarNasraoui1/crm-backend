@@ -78,4 +78,17 @@ public class OpportunityServiceImpl implements OpportunityService {
         opportunity.setContacts(contacts);
         return opportunityMapper.toDto(opportunityRepository.save(opportunity));
     }
+
+    @Override
+    public List<OpportunityDto> updateOpportunities(List<OpportunityDto> opportunityDtos) {
+        opportunityDtos.forEach((opportunityDto -> {
+            Opportunity opportunity=opportunityRepository.findById(opportunityDto.getId()).orElseThrow(()->new EntityNotFoundException("opportunity not found"));
+            opportunity.setContacts(contactMapper.toBos(opportunityDto.getContacts()));
+            opportunity.setStage(opportunityDto.getStage());
+            opportunity.setName(opportunityDto.getName());
+            opportunity.setCloseDate(opportunityDto.getCloseDate());
+            opportunityRepository.save(opportunity);
+        }));
+        return opportunityMapper.toDtos(opportunityRepository.findAll());
+    }
 }

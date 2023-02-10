@@ -20,8 +20,6 @@ import java.util.List;
 public class OpportunityResource extends CrmBaseEntityResource {
     @Autowired
     OpportunityService opportunityService;
-    @Autowired
-    OpportunityMapper opportunityMapper;
 
     @GetMapping("/all")
     public ResponseEntity<List<OpportunityDto>> getAllOpportunities(){
@@ -43,9 +41,15 @@ public class OpportunityResource extends CrmBaseEntityResource {
         return new ResponseEntity<>(opportunityService.saveOpportunity(opportunityDto), HttpStatus.OK);
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<OpportunityDto>updateOpportunity(@PathVariable("id")Long id,@RequestBody OpportunityDto opportunityDto){
         return ResponseEntity.ok(opportunityService.updateOpportunity(id,opportunityDto));
+    }
+
+    @PutMapping("/all")
+    public ResponseEntity<List<OpportunityDto>>updateAllOpportunities(@RequestBody List<OpportunityDto> opportunityDtos){
+        return ResponseEntity.ok(opportunityService.updateOpportunities(opportunityDtos));
     }
 
 

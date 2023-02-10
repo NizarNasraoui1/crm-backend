@@ -19,4 +19,6 @@ public interface OpportunityService {
     void deleteOpportunity(Long id);
 
     OpportunityDto updateOpportunity(Long id,OpportunityDto opportunityDto);
+
+    List<OpportunityDto> updateOpportunities(List<OpportunityDto>opportunityDtos);
 }
