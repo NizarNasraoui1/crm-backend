@@ -1,10 +1,9 @@
 package com.crm.Crm.enumeration;
 
 public enum OpportunityStageEnum {
-    QALIFICATION("qualification"),
+    FIRST_CONTACT("first contact"),
     MEETING_SCHEDULED("meeting scheduled"),
     PROPOSAL("proposal"),
-    NEGOCIATION("negociation"),
     CLOSED("closed");
 
     private final String label;
