@@ -25,7 +25,7 @@ public interface ContactService extends CrmBaseEntityService{
 
     Boolean hasOpportunity(Long id);
 
-    List<DynamicSearchDto> findContactDynamically(String name);
+    List<DynamicSearchDto> findContactDynamically(String searchWordParam);
 
     // FilteredPageWrapper<ContactDto> getFilteredPage(String searchWord, SearchFields searchFields, int page, int pageSize, String sortField, String sortDirection);
 

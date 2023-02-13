@@ -36,8 +36,9 @@ public class OpportunityServiceImpl implements OpportunityService {
     private ContactService contactService;
 
     @Override
-    public OpportunityDto saveOpportunity(OpportunityDto opportunityDto) {
+    public OpportunityDto saveNewOpportunity(OpportunityDto opportunityDto) {
         Opportunity opportunity=opportunityMapper.toBo(opportunityDto);
+        opportunity.setStage(OpportunityStageEnum.FIRST_CONTACT);
         List<Long>contactIds=opportunity.getContacts().stream().map(Contact::getId).collect(Collectors.toList());
         List<Contact>contactList=contactRepository.findAllByIdIn(contactIds);
         for (Contact contact : contactList) {

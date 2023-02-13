@@ -2,10 +2,7 @@ package com.crm.Crm.resource;
 
 import com.crm.Crm.dto.ContactDto;
 import com.crm.Crm.dto.OpportunityDto;
-import com.crm.Crm.entity.Contact;
-import com.crm.Crm.entity.Opportunity;
 import com.crm.Crm.enumeration.OpportunityStageEnum;
-import com.crm.Crm.mapper.OpportunityMapper;
 import com.crm.Crm.service.OpportunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +35,7 @@ public class OpportunityResource extends CrmBaseEntityResource {
 
     @PostMapping
     public ResponseEntity<OpportunityDto> saveOpportunity(@RequestBody OpportunityDto opportunityDto){
-        return new ResponseEntity<>(opportunityService.saveOpportunity(opportunityDto), HttpStatus.OK);
+        return new ResponseEntity<>(opportunityService.saveNewOpportunity(opportunityDto), HttpStatus.OK);
     }
 
 
