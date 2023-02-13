@@ -123,4 +123,25 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
         if(contact.getOpportunities().size()!=0) return true;
         return false;
     }
+
+    @Override
+    public List<DynamicSearchDto> findContactDynamically(String name) {
+        Specification<Contact>contactFirstNameSpecification=(((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("firstName"),name)));
+        Specification<Contact>contactFirstLastNameSpecification=(((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("lastName"),name)));
+        Specification<Contact>contactGlobalSpecification=contactFirstNameSpecification.or(contactFirstLastNameSpecification);
+        List<Contact>result=contactRepository.findAll(contactGlobalSpecification);
+        return result.stream().map((contact -> {
+            String content;
+            if(contact.getFirstName()!=null && contact.getLastName()!=null){
+                content=contact.getFirstName()+" "+contact.getLastName();
+            }
+            else if (contact.getFirstName()!=null){
+                content=contact.getFirstName()+" "+contact.getLastName();
+            }
+            else{
+                content=contact.getFirstName()+" "+contact.getLastName();
+            }
+            return new DynamicSearchDto(contact.getId(),content);
+        })).collect(Collectors.toList());
+    }
 }

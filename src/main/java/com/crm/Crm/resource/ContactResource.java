@@ -1,5 +1,6 @@
 package com.crm.Crm.resource;
 
+import com.crm.Crm.dto.DynamicSearchDto;
 import com.crm.Crm.dto.commons.SearchConfiguration;
 import com.crm.Crm.dto.commons.SearchFields;
 import com.crm.Crm.dto.commons.FilteredPageWrapper;
@@ -10,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/contact")
@@ -68,5 +71,9 @@ public class ContactResource extends CrmBaseEntityResource {
     @GetMapping("/search-params")
     public ResponseEntity<SearchConfiguration> getSearchParams() throws ClassNotFoundException {
         return new ResponseEntity<>(this.contactService.getSearchParams(),HttpStatus.OK);
+    }
+    @GetMapping("/dynamic-search")
+    public ResponseEntity<List<DynamicSearchDto>> getContactDynamicallyByFirstName(@RequestParam(value = "name",required = true)String name){
+        return new ResponseEntity<>(contactService.findContactDynamically(name),HttpStatus.OK);
     }
 }
