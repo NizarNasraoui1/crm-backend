@@ -84,7 +84,7 @@ public class OpportunityServiceImpl implements OpportunityService {
         opportunityDtos.forEach((opportunityDto -> {
             Opportunity opportunity=opportunityRepository.findById(opportunityDto.getId()).orElseThrow(()->new EntityNotFoundException("opportunity not found"));
             opportunity.setContacts(contactMapper.toBos(opportunityDto.getContacts()));
-            opportunity.setStage(OpportunityStageEnum.valueOf(opportunityDto.getStage().toString()));
+            opportunity.setStage(opportunityDto.getStage());
             opportunity.setName(opportunityDto.getName());
             opportunity.setCloseDate(opportunityDto.getCloseDate());
             opportunityRepository.save(opportunity);
