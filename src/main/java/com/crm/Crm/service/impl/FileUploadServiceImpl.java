@@ -40,19 +40,24 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 
     @Override
+    @Transactional
     public void uploadFile(MultipartFile file,Long crmBaseEntityId) {
         try {
-            checkFileType(file);
-            Files.copy(file.getInputStream(), Paths.get(this.root).resolve(file.getOriginalFilename()));
-            this.saveFilePathInDatabase(file,crmBaseEntityId);
+            if(!checkIfFileAlreadyExists(file)){
+                checkFileType(file);
+                Files.copy(file.getInputStream(), Paths.get(this.root).resolve(file.getOriginalFilename()));
+                this.saveFilePathInDatabase(file,crmBaseEntityId);
+            }
 
-        } catch (FileAlreadyExistsException e) {
-                log.warn("this file already exists");
 
         }
         catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public boolean checkIfFileAlreadyExists(MultipartFile file){
+        return fileRepository.existsByPath(file.getOriginalFilename());
     }
 
     @Override

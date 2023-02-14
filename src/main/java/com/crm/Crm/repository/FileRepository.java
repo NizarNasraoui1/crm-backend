@@ -15,4 +15,6 @@ public interface FileRepository extends JpaRepository<File,Long> {
 
     @Query("SELECT path FROM File f WHERE crm_base_entity_id=:crmBaseEntityId")
     List<String> findAllByCrmBaseEntity(@Param("crmBaseEntityId") Long crmBaseEntityId);
+
+    boolean existsByPath(String path);
 }
