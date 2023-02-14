@@ -5,6 +5,7 @@ import com.crm.Crm.dto.OpportunityDto;
 import com.crm.Crm.entity.Contact;
 import com.crm.Crm.entity.Opportunity;
 import com.crm.Crm.enumeration.OpportunityStageEnum;
+import com.crm.Crm.event.CrmBaseEntityCreatedEvent;
 import com.crm.Crm.mapper.ContactMapper;
 import com.crm.Crm.mapper.OpportunityMapper;
 import com.crm.Crm.repository.ContactRepository;
@@ -12,7 +13,9 @@ import com.crm.Crm.repository.OpportunityRepository;
 import com.crm.Crm.service.ContactService;
 import com.crm.Crm.service.OpportunityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -35,7 +38,11 @@ public class OpportunityServiceImpl implements OpportunityService {
     @Autowired
     private ContactService contactService;
 
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
+
     @Override
+    @Transactional
     public OpportunityDto saveNewOpportunity(OpportunityDto opportunityDto) {
         Opportunity opportunity=opportunityMapper.toBo(opportunityDto);
         opportunity.setStage(OpportunityStageEnum.FIRST_CONTACT);
@@ -45,6 +52,8 @@ public class OpportunityServiceImpl implements OpportunityService {
             contact.getOpportunities().add(opportunity);
         }
         contactRepository.saveAll(contactList);
+        applicationEventPublisher.publishEvent(new CrmBaseEntityCreatedEvent(opportunity));
+
         return opportunityMapper.toDto(opportunityRepository.save(opportunity));
     }
 
