@@ -5,27 +5,26 @@ import com.crm.Crm.repository.ContactRepository;
 import com.crm.Crm.repository.FileRepository;
 import com.crm.Crm.repository.NoteRepository;
 import com.crm.Crm.repository.OpportunityRepository;
-import com.crm.Crm.service.StatisticsService;
+import com.crm.Crm.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
-    private ContactRepository contactRepository;
+    private ContactService contactService;
     @Autowired
-    private FileRepository fileRepository;
+    private FileUploadService fileUploadService;
     @Autowired
-    private NoteRepository noteRepository;
+    private NoteService noteService;
     @Autowired
-    private OpportunityRepository opportunityRepository;
+    private OpportunityService opportunityService;
     @Override
     public StatisticsDto getStatistics() {
-        int contactsCount= contactRepository.countContacts();
-        int fileCount= fileRepository.countFiles();
-        int opportunityCount=opportunityRepository.countOpportunities();
-        int noteCount= noteRepository.countNotes();
-
+        int contactsCount= contactService.countContacts();
+        int fileCount= fileUploadService.countFiles();
+        int opportunityCount=opportunityService.countOpportunities();
+        int noteCount= noteService.countNotes();
         return new StatisticsDto(contactsCount,opportunityCount,noteCount,fileCount);
     }
 }

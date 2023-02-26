@@ -8,6 +8,8 @@ import com.crm.Crm.repository.CrmBaseEntityRepository;
 import com.crm.Crm.repository.NoteRepository;
 import com.crm.Crm.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,7 @@ public class NoteServiceImpl implements NoteService {
         note.setCrmBaseEntity(crmBaseEntity);
         crmBaseEntity.getNoteList().add(note);
         Note savedNote=noteRepository.save(noteMapper.toBo(noteDto));
+        noteRepository.countNotes();
         return noteMapper.toDto(savedNote);
     }
 
@@ -47,5 +50,12 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public void deleteNote(Long id) {
         this.noteRepository.deleteById(id);
+        noteRepository.countNotes();
+    }
+
+    @Override
+    @Cacheable(value="noteCount")
+    public int countNotes() {
+        return noteRepository.countNotes();
     }
 }

@@ -1,6 +1,7 @@
 package com.crm.Crm.repository;
 
 import com.crm.Crm.entity.Note;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,7 @@ public interface NoteRepository extends JpaRepository<Note,Long> {
     List<Note> findAllByCrmBaseEntityIdOrderByModifyDateDesc(Long id);
 
     @Query("select count(*) from Note")
+    @CachePut(value="noteCount")
     int countNotes();
 
 

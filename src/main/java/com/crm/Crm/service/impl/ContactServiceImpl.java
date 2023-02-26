@@ -18,6 +18,8 @@ import com.crm.Crm.mapper.CrmBaseEntityMapper;
 import com.crm.Crm.service.ContactService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -58,6 +60,7 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
     public ContactDto saveContact(ContactDto contactDto) {
         Contact newContact= contactRepository.save(contactMapper.toBo(contactDto));
         applicationEventPublisher.publishEvent(new CrmBaseEntityCreatedEvent(newContact));
+        contactRepository.countContacts();
         return contactMapper.toDto(newContact);
     }
 
@@ -77,6 +80,7 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
         Contact contact=contactRepository.findById(id).orElseThrow(()->new ResourceNotFoundException());
         contact.getOpportunities().forEach((opportunity -> opportunity.getContacts().remove(contact)));
         contactRepository.deleteById(id);
+        contactRepository.countContacts();
     }
 
 
@@ -144,4 +148,13 @@ public class ContactServiceImpl extends CrmBaseEntityServiceImpl implements Cont
             return new DynamicSearchDto(contact.getId(),content);
         })).collect(Collectors.toList());
     }
+
+    @Override
+    @Cacheable(value = "countContact")
+    public int countContacts() {
+        return contactRepository.countContacts();
+    }
+
+
+
 }

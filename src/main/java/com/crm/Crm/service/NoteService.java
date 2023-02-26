@@ -5,10 +5,12 @@ import com.crm.Crm.dto.NoteDto;
 import java.util.List;
 
 public interface NoteService {
-    public List<NoteDto> getNoteListByAccountId(Long id);
-    public NoteDto saveNote(Long id,NoteDto noteDto);
+    List<NoteDto> getNoteListByAccountId(Long id);
+    NoteDto saveNote(Long id,NoteDto noteDto);
 
-    public NoteDto updateNote(Long id,NoteDto noteDto);
+    NoteDto updateNote(Long id,NoteDto noteDto);
 
-    public void deleteNote(Long id);
+    void deleteNote(Long id);
+
+    int countNotes();
 }

@@ -10,13 +10,13 @@ import java.util.Date;
 @ControllerAdvice
 public class ControllerExceptionHundler {
     @ExceptionHandler (Exception.class)
-    public ResponseEntity<ErrorMessage> globalExceptionHundler(Exception exception, WebRequest request){
+    public ResponseEntity<ErrorMessage> hundleException(Exception exception, WebRequest request){
         exception.printStackTrace();
-        ErrorMessage message = new ErrorMessage(
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                new Date(),
-                exception.getMessage(),
-                request.getDescription(false));
-        return new ResponseEntity<>(message,HttpStatus.INTERNAL_SERVER_ERROR);
+        ErrorMessage errorMessage= new ErrorMessage();
+        errorMessage.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        errorMessage.setTimestamp(new Date());
+        errorMessage.setMessage(exception.getMessage());
+        errorMessage.setDescription(request.getDescription(false));
+        return new ResponseEntity<>(errorMessage,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

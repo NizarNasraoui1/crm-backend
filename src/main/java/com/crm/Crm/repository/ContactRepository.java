@@ -1,6 +1,7 @@
 package com.crm.Crm.repository;
 
 import com.crm.Crm.entity.Contact;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +18,7 @@ public interface ContactRepository extends JpaRepository<Contact, Long>, JpaSpec
     List<Contact> findAllByIdIn(List<Long>idList);
 
     @Query("select count(*) from Contact")
+    @CachePut(value = "countContact")
     int countContacts();
 
 

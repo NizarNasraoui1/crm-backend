@@ -13,6 +13,8 @@ import com.crm.Crm.repository.OpportunityRepository;
 import com.crm.Crm.service.ContactService;
 import com.crm.Crm.service.OpportunityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +55,7 @@ public class OpportunityServiceImpl implements OpportunityService {
         }
         contactRepository.saveAll(contactList);
         applicationEventPublisher.publishEvent(new CrmBaseEntityCreatedEvent(opportunity));
+        opportunityRepository.countOpportunities();
 
         return opportunityMapper.toDto(opportunityRepository.save(opportunity));
     }
@@ -76,6 +79,7 @@ public class OpportunityServiceImpl implements OpportunityService {
     @Override
     public void deleteOpportunity(Long id) {
         opportunityRepository.delete(opportunityRepository.findById(id).orElseThrow(()->new EntityNotFoundException("opportunity not found")));
+        opportunityRepository.countOpportunities();
 
     }
 
@@ -100,5 +104,11 @@ public class OpportunityServiceImpl implements OpportunityService {
             opportunityRepository.save(opportunity);
         }));
         return opportunityMapper.toDtos(opportunityRepository.findAll());
+    }
+
+    @Override
+    @Cacheable(value = "countOpportunities")
+    public int countOpportunities() {
+        return opportunityRepository.countOpportunities();
     }
 }

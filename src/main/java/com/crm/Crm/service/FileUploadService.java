@@ -13,4 +13,6 @@ public interface FileUploadService{
     List<String>getCrmBaseEntityFileNames(Long id);
 
     java.net.URI getAbsolutePath(String filename);
+
+    int countFiles();
 }

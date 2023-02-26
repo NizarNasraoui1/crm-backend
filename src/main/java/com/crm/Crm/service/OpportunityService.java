@@ -20,4 +20,6 @@ public interface OpportunityService {
     OpportunityDto updateOpportunity(Long id,OpportunityDto opportunityDto);
 
     List<OpportunityDto> updateOpportunities(List<OpportunityDto>opportunityDtos);
+
+    int countOpportunities();
 }
