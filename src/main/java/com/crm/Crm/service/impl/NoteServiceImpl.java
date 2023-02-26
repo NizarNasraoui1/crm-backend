@@ -33,8 +33,7 @@ public class NoteServiceImpl implements NoteService {
         CrmBaseEntity crmBaseEntity=crmBaseEntityRepository.findById(id).orElseThrow(()->new ResourceNotFoundException());
         Note note=noteMapper.toBo(noteDto);
         note.setCrmBaseEntity(crmBaseEntity);
-        crmBaseEntity.getNoteList().add(note);
-        Note savedNote=noteRepository.save(noteMapper.toBo(noteDto));
+        Note savedNote=noteRepository.save(note);
         noteRepository.countNotes();
         return noteMapper.toDto(savedNote);
     }

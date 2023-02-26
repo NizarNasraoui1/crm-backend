@@ -6,6 +6,7 @@ import com.crm.Crm.mapper.NotificationMapper;
 import com.crm.Crm.repository.NotificationRepository;
 import com.crm.Crm.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Autowired
     NotificationMapper notificationMapper;
     @Override
+    @Cacheable(value = "lastNotifications")
     public List<NotificationDto> getLastNotifications() {
         return notificationMapper.toDtos(notificationRepository.getLastNotifications());
     }
