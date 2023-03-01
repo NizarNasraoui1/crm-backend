@@ -10,13 +10,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executor;
 
 @SpringBootApplication
 @EnableCaching
+@EnableAsync
 	public class CrmApplication {
 	@Bean
 	org.springframework.security.crypto.password.PasswordEncoder passwordEncoder() {

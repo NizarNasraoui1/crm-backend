@@ -9,6 +9,8 @@ import com.crm.Crm.repository.NotificationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -19,6 +21,7 @@ public class CrmBaseEntityCreatedEventListener implements ApplicationListener<Cr
     @Autowired
     CacheUtil cacheUtil;
     @Override
+    @Async
     public void onApplicationEvent(CrmBaseEntityCreatedEvent crmBaseEntityCreatedEvent) {
         CrmBaseEntity crmBaseEntity=crmBaseEntityCreatedEvent.getCrmBaseEntity();
         if(crmBaseEntity instanceof Contact){
