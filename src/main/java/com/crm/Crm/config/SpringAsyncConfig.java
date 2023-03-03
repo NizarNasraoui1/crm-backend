@@ -9,7 +9,7 @@ import java.util.concurrent.Executor;
 @Configuration
 public class SpringAsyncConfig {
     @Bean
-    public Executor taskExecutor() {
+    public Executor taskExecution() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(2);
         executor.setMaxPoolSize(2);
