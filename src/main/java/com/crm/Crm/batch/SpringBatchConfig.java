@@ -29,53 +29,20 @@ public class SpringBatchConfig {
     private StepBuilderFactory stepBuilderFactory;
     @Autowired
     private ContactRepository contactRepository;
+    @Autowired
+    private ContactProcessor contactProcessor;
+    @Autowired
+    private ContactItemWriter contactItemWriter;
+    @Autowired
+    ContactItemReader contactItemReader;
 
-    @Bean
-    public FlatFileItemReader<Contact> reader() {
-        FlatFileItemReader<Contact> itemReader = new FlatFileItemReader<>();
-        itemReader.setResource(new FileSystemResource("src/main/resources/contact.csv"));
-        itemReader.setName("csvReader");
-        itemReader.setLinesToSkip(1);
-        itemReader.setLineMapper(lineMapper());
-        return itemReader;
-    }
-
-    private LineMapper<Contact> lineMapper() {
-        DefaultLineMapper<Contact> lineMapper = new DefaultLineMapper<>();
-
-        DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
-        lineTokenizer.setDelimiter(",");
-        lineTokenizer.setStrict(false);
-        lineTokenizer.setNames("firstName", "lastName","email", "address");
-
-        BeanWrapperFieldSetMapper<Contact> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
-        fieldSetMapper.setTargetType(Contact.class);
-
-        lineMapper.setLineTokenizer(lineTokenizer);
-        lineMapper.setFieldSetMapper(fieldSetMapper);
-        return lineMapper;
-
-    }
-
-    @Bean
-    public ContactProcessor processor() {
-        return new ContactProcessor();
-    }
-
-    @Bean
-    public RepositoryItemWriter<Contact> writer() {
-        RepositoryItemWriter<Contact> writer = new RepositoryItemWriter<>();
-        writer.setRepository(contactRepository);
-        writer.setMethodName("save");
-        return writer;
-    }
 
     @Bean
     public Step step1() {
         return stepBuilderFactory.get("csv-step").<Contact, Contact>chunk(10)
-                .reader(reader())
-                .processor(processor())
-                .writer(writer())
+                .reader(contactItemReader)
+                .processor(contactProcessor)
+                .writer(contactItemWriter)
                 .taskExecutor(taskExecutor())
                 .build();
     }
