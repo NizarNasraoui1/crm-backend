@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class ContactItemReader extends FlatFileItemReader<Contact> {
 
     public ContactItemReader(){
-        this.setResource(new FileSystemResource("src/main/resources/contact.csv"));
+        this.setResource(new FileSystemResource("src/main/resources/batch-files/contact.csv"));
         this.setName("csvReader");
         this.setLinesToSkip(1);
         this.setLineMapper(this.lineMapper());
@@ -21,7 +21,6 @@ public class ContactItemReader extends FlatFileItemReader<Contact> {
 
     public LineMapper<Contact> lineMapper() {
         DefaultLineMapper<Contact> lineMapper = new DefaultLineMapper<>();
-
         DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
         lineTokenizer.setDelimiter(",");
         lineTokenizer.setStrict(false);

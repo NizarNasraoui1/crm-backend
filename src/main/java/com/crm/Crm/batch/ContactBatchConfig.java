@@ -22,13 +22,11 @@ import org.springframework.core.task.TaskExecutor;
 
 @Configuration
 @EnableBatchProcessing
-public class SpringBatchConfig {
+public class ContactBatchConfig {
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
-    @Autowired
-    private ContactRepository contactRepository;
     @Autowired
     private ContactProcessor contactProcessor;
     @Autowired

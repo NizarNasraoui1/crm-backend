@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 !**/src/main/resources/uploaded-files
+!**/src/main/resources/batch-files
 ### STS ###
 .apt_generated
 .classpath
